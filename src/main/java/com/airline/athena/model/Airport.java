@@ -2,9 +2,11 @@ package com.airline.athena.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity(name="airports")
 public class Airport {
+	@Id
 	@Column(length = 3, nullable = false, unique = true)
 	private String airportId;
 
