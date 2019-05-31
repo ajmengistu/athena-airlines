@@ -11,6 +11,7 @@
 	<groupId>com.airline.athena</groupId>
 	<artifactId>athena-airlines</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>athena-airlines</name>
 	<description>An airline booking system Spring Boot web application.</description>
 
