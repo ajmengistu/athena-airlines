@@ -10,15 +10,13 @@ import javax.validation.constraints.NotBlank;
 public class FlightSearchForm {
 	private static List<SeatType> seatTypes = new ArrayList<SeatType>(Arrays.asList(SeatType.values()));
 
-	private Boolean roundTrip;
-	private Boolean oneWay;
 	@NotBlank(message = "*Please enter a valid origin.")
 	private String from;
 	@NotBlank(message = "*Please enter a valid destination.")
 	private String to;
-	private String departureDate; // Default: current date
+	private Date departureDate; // Default: current date
 	private Date returnDate; // Default: one-week from current date
-	private Integer numTravelers; // Default: 1 Adult
+	private Integer numPassengers; // Default: 1 Adult
 	private SeatType seatType; // Default: Economy
 
 	public String getFrom() {
@@ -37,11 +35,11 @@ public class FlightSearchForm {
 		this.to = to;
 	}
 
-	public String getDepartureDate() {
+	public Date getDepartureDate() {
 		return departureDate;
 	}
 
-	public void setDepartureDate(String departureDate) {
+	public void setDepartureDate(Date departureDate) {
 		this.departureDate = departureDate;
 	}
 
@@ -57,18 +55,26 @@ public class FlightSearchForm {
 		return seatTypes;
 	}
 
-	public Integer getNumTravelers() {
-		return numTravelers;
+	public Integer getNumPassengers() {
+		return numPassengers;
 	}
 
-	public void setNumTravelers(Integer numTravelers) {
-		this.numTravelers = numTravelers;
+	public void setNumPassengers(Integer numTravelers) {
+		this.numPassengers = numTravelers;
+	}
+
+	public Date getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
 	}
 
 	@Override
 	public String toString() {
-		return "[From: " + this.from + ", To: " + this.to + ", dDate: " + this.departureDate + ", Travelers: "
-				+ this.numTravelers + ", Seat: " + this.seatType + "]";
+		return "[From: " + this.from + ", To: " + this.to + ", departureDate: " + this.departureDate + ", Passengers: "
+				+ this.numPassengers + ", Seat: " + this.seatType + ", returnDate: " + this.returnDate + "]";
 
 	}
 }

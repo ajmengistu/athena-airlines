@@ -1,1 +1,346 @@
-<h1>Hello World!</h1>
+<!doctype html>
+<html ang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,
+         shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="icon" href="logo.jpg">
+<title>Athena Airlines | Home</title>
+</head>
+<body>
+	<!-- Navigation bar START-->
+	<div class="container">
+		<nav class="navbar navbar-light">
+			<span class="navbar-brand mb-0 h1" style="font-size: 30px;"><a
+				href="/" style="text-decoration: none;">Athena Airlines</a></span> <span
+				class="navbar-brand mb-0 h1"><a href="/"
+				style="text-decoration: none;"> <img src="logo.jpg" alt=""
+					width="50%"></a> </span> <span class="text-primary">Plan Travel</span> <span
+				class="text-primary">Travel Information</span> <span
+				class="text-primary">Athena Airlines Advantage</span> <span
+				class="text-primary">Deals & offers</span> <span>Sign In</span>
+		</nav>
+	</div>
+	<!-- Navigation bar END-->
+	<!-- Image Carousel START-->
+	<!-- Image Carousel END-->
+	<!-- Form: Book a Flight, Check-in, Flight status START-->
+	<div class="container">
+		<ul class="nav nav-tabs" id="myTab" role="tablist">
+			<li class="nav-item"><a class="nav-link active" id="home-tab"
+				data-toggle="tab" href="#home" role="tab" aria-controls="home"
+				aria-selected="true">Book flights</a></li>
+			<li class="nav-item"><a class="nav-link" id="profile-tab"
+				data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+				aria-selected="false">Check-in</a></li>
+			<li class="nav-item"><a class="nav-link" id="contact-tab"
+				data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+				aria-selected="false">Flight status</a></li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+			<div class="tab-pane fade show active" id="home" role="tabpanel"
+				aria-labelledby="home-tab">
+				<!-- Form: Book a Flight   START-->
+				<form class="needs-validation"
+					th:action="@{/search-flights/book-a-flight}"
+					th:object="${flightSearchForm}" method="get" novalidate>
+					<!-- Round trip or One way START-->
+					<div
+						class="custom-control custom-radio
+                     custom-control-inline mb-4 mt-4">
+						<input type="radio" id="customRadioInline1"
+							 value="ONEWAY"
+							name="flightMethod" class="custom-control-input"
+							onclick="removeReturnDateBox()" checked="checked"> <label
+							class="custom-control-label" for="customRadioInline1">One
+							way</label>
+					</div>
+					<div
+						class="custom-control custom-radio
+                     custom-control-inline">
+						<input type="radio" name="flightMethod"
+							value="ROUNDTRIP"
+							class="custom-control-input" onclick="showReturnDateBox()"
+							id="customRadioInline2"> <label
+							class="custom-control-label" for="customRadioInline2">Round
+							trip</label>
+					</div>
+					<!-- Round trip or One way END-->
+					<div class="form-row">
+						<div class="col-md-3 mb-3">
+							<label for="validationServer01">From*</label> <input type="text"
+								th:field="*{from}" class="form-control" id="validationServer01"
+								placeholder="City or airport" required>
+							<div class="invalid-feedback">Please provide a valid
+								departing airport!</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationServer02">To*</label> <input type="text"
+								th:field="*{to}" class="form-control" id=""
+								placeholder="City or airport" required>
+							<div class="invalid-feedback">Please provide a valid
+								arrival airport!</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationServer02">Number of passengers*</label> <select
+								type="text" class="form-control" th:field="*{numPassengers}">
+								<option value="1">1 Adult</option>
+								<option value="2">2 Adults</option>
+								<option value="3">3 Adults</option>
+								<option value="1">4 Adults</option>
+								<option value="2">5 Adults</option>
+								<option value="3">6 Adults</option>
+							</select>
+							<div class="invalid-feedback"></div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-3 mb-3">
+                        <label for="validationServer03">Depart*</label>
+                        <input type="text" 
+                           class="form-control" id="todaysDate"  
+                            value="05/25/2019" th:field="*{departureDate}"
+                           placeholder=""
+                           required>
+                           
+                        <div class="invalid-feedback">
+                           Please provide a valid depart date.
+                        </div>
+						</div>
+						<div class="col-md-3 mb-3" id="returnDate" style="display: none">
+							<label for="validationServer04">Return*</label> <input
+								type="text" class="form-control" id="futureReturnDate"
+								th:field="*{returnDate}" value="05/25/2019" placeholder="" required>
+							<div class="invalid-feedback">Please provide a valid return
+								date.</div>
+						</div>
+					</div>
+					<button class="btn btn-primary" type="submit">Find flights</button>
+				</form>
+				<!-- -------Form: Book a Flight---------   END-->
+			</div>
+			<div class="tab-pane fade" id="profile" role="tabpanel"
+				aria-labelledby="profile-tab">
+				<!-- ----------Form: Check-in---------------- START-->
+				<form class="needs-validation" novalidate>
+					<div class="form-row mt-4">
+						<p class="ml-2">
+							Check-in is available starting 24 hours before your scheduled
+							departure. See our <a href="#">Check-in and Airport
+								Processing Times </a> page for details.
+						</p>
+						<div class="col-md-3 mb-3">
+							<input type="text" class="form-control" id="validationServer01"
+								placeholder="Passenger first name*" required>
+							<div class="invalid-tooltip">Please provide a valid first
+								name!</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<input type="text" class="form-control" id="validationServer02"
+								placeholder="Passenger last name*" required>
+							<div class="invalid-tooltip">Please provide a valid last
+								name!</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<input type="text" class="form-control" id="validationServer02"
+								placeholder="Confirmation number*" required>
+							<div class="invalid-tooltip">Please provide a valid
+								confirmation number!</div>
+						</div>
+					</div>
+					<button class="btn btn-primary" type="submit">Check in</button>
+				</form>
+				<!-- ----------Form: Check-in------------------ END-->
+			</div>
+			<div class="tab-pane fade" id="contact" role="tabpanel"
+				aria-labelledby="contact-tab">
+				<!-- ----------Form: Flight status------------------ START-->
+				<form class="needs-validation" novalidate>
+					<div class="form-row mt-4">
+						<div class="col-md-3 mb-3">
+							<label for="validationServer01">From*</label> <input type="text"
+								class="form-control" id="validationServer01"
+								placeholder="City or airport*" required>
+							<div class="valid-feedback">Looks good!</div>
+							<div class="invalid-tooltip">Please provide a valid
+								departing airport or city!</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationServer02">To*</label> <input type="text"
+								class="form-control " id="validationServer02"
+								placeholder="City or
+                           airport*"
+								required>
+							<div class="valid-feedback">Looks good!</div>
+							<div class="invalid-tooltip">Please provide a valid arrival
+								airport or city!</div>
+						</div>
+					</div>
+					<div class="form-row mt-3">
+						<div class="col-md-3 mb-3">
+							<label for="validationServer02">Date*</label> <input type="text"
+								class="form-control" placeholder="" id="todaysDate"
+								name="flightStatuseDate" value="05/25/2019" required>
+							<div class="valid-feedback">
+								<!-- Looks good! -->
+							</div>
+							<div class="invalid-tooltip">Please provide a valid date!</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationServer02">Flight number*</label> <input
+								type="text" class="form-control" id="validationServer02"
+								placeholder="" required>
+							<div class="valid-feedback">Looks good!</div>
+							<div class="invalid-tooltip">Please provide a valid flight
+								number!</div>
+						</div>
+					</div>
+					<button class="btn btn-primary" type="submit">Find flight</button>
+				</form>
+				<!-- ----------Form: Flight status------------------ END-->
+			</div>
+		</div>
+	</div>
+	<!-- -----------Form: Book Flights Script--------------- START-->
+	<script>
+		// Show Round trip box to select return date
+		function showReturnDateBox() {
+			document.getElementById('returnDate').style.display = 'block';
+		}
+
+		// Remove Round trip box when One way flight method is selected.
+		function removeReturnDateBox() {
+			document.getElementById('returnDate').style.display = 'none';
+		}
+
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
+			window.addEventListener('load',
+					function() {
+						// Fetch all the forms we want to apply custom Bootstrap validation styles to
+						var forms = document
+								.getElementsByClassName('needs-validation');
+						// Loop over them and prevent submission
+						var validation = Array.prototype.filter.call(forms,
+								function(form) {
+									form.addEventListener('submit', function(
+											event) {
+										if (form.checkValidity() === false) {
+											event.preventDefault();
+											event.stopPropagation();
+										}
+										form.classList.add('was-validated');
+									}, false);
+								});
+					}, false);
+		})();
+	</script>
+	<!-- -----------Form: Book Flights Script--------------- END-->
+	<!-- Form: Book Flight, Check-in, Flight status END-->
+	<!-- ---------------Datepicker Script---------------- START-->
+	<script>
+		function todaysDate() {
+			var today = new Date();
+			var dd = String(today.getDate()).padStart(2, '0');
+			var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+			var yyyy = today.getFullYear();
+
+			today = mm + '/' + dd + '/' + yyyy;
+	return today;
+	}
+
+		function futureDate() {
+			var someDate = new Date();
+			var numberOfDaysToAdd = 7;
+			someDate.setDate(someDate.getDate() + numberOfDaysToAdd);
+			var dd = someDate.getDate();
+			var mm = someDate.getMonth() + 1;
+			var y = someDate.getFullYear();
+
+			return mm + '/' + dd + '/' + y;
+		}
+
+		// Display the current date        
+		//alert(todaysDate());
+		//alert(futureDate());
+		document.getElementById("todaysDate").value = todaysDate();
+		document.getElementById('futureReturnDate').value = futureDate();
+
+		// Render the datepicker 
+		$(function() {
+			$('input[name$="Date"]').daterangepicker({
+				"minDate" : todaysDate(),
+				singleDatePicker : true,
+				showDropdowns : true,
+				minYear : 1901,
+				maxYear : parseInt(moment().format('YYYY'), 10)
+			}, function(start, end, label) {
+				var years = moment().diff(start, 'years');
+			});
+		});
+	</script>
+	<!-- ---------------Datepicker Script---------------- END-->
+	<!-- ---------------Autocomplete from/to airports---- START -->
+	<script>
+		var airports;
+		$.ajax({
+			url : '/airports',
+			type : 'get',
+			dataType : 'json',
+			success : function(data) {
+				console.log(data)
+				$(function() {
+					$("#fromAirports").autocomplete({
+						source : data,
+					});
+					$("#toAirports").autocomplete({
+						source : data,
+					});
+				});
+
+			},
+			error : function(data) {
+				console.log(data)
+			}
+		});
+	</script>
+	</script>
+	<!-- ---------------Autocomplete from/to airports---- END -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
+</body>
+</html>
