@@ -17,7 +17,6 @@ public class FlightSearchForm {
 	private Date departureDate; // Default: current date
 	private Date returnDate; // Default: one-week from current date
 	private Integer numPassengers; // Default: 1 Adult
-	private SeatType seatType; // Default: Economy
 
 	public String getFrom() {
 		return from;
@@ -43,14 +42,6 @@ public class FlightSearchForm {
 		this.departureDate = departureDate;
 	}
 
-	public SeatType getSeatType() {
-		return seatType;
-	}
-
-	public void setSeatType(SeatType seatType) {
-		this.seatType = seatType;
-	}
-
 	public List<SeatType> getSeatTypes() {
 		return seatTypes;
 	}
@@ -74,7 +65,7 @@ public class FlightSearchForm {
 	@Override
 	public String toString() {
 		return "[From: " + this.from + ", To: " + this.to + ", departureDate: " + this.departureDate + ", Passengers: "
-				+ this.numPassengers + ", Seat: " + this.seatType + ", returnDate: " + this.returnDate + "]";
+				+ this.numPassengers + ", returnDate: " + this.returnDate + "]";
 
 	}
 }
