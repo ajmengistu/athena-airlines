@@ -1,5 +1,7 @@
 package com.airline.athena.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -9,17 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.airline.athena.model.ScheduledFlight;
 import com.airline.athena.model.enums.FlightMethod;
 import com.airline.athena.model.forms.FlightSearchForm;
 import com.airline.athena.service.FlightSearchService;
 
 @Controller
 public class BookAFlightController {
-//	@Autowired
-//	private AirportRepository airportRepository;
-	@Autowired
-	private FlightSearchService fligthSearchService;
+	private FlightSearchService flightSearchService = new FlightSearchService();
 
 //	@GetMapping("/airports")
 //	public @ResponseBody List<String> getAirports() {
@@ -32,6 +33,11 @@ public class BookAFlightController {
 //
 //		return airportIds;
 //	}
+
+	@GetMapping("/scheduledFlights")
+	public @ResponseBody List<ScheduledFlight> getAll() {
+		return flightSearchService.getAll();
+	}
 
 	@GetMapping("/")
 	public String getHomeAndSearchForFlights(FlightSearchForm flightSearchForm) {
@@ -51,7 +57,8 @@ public class BookAFlightController {
 		System.out.println("------------------------------Success---------------------------");
 
 		flightSearchForm.setFlightMethod((FlightMethod.valueOf(request.getParameter("flightMethod"))));
-		FlightSearchService.getFlightSearchResults(modelMap, flightSearchForm);
+
+		flightSearchService.getFlightSearchResults(modelMap, flightSearchForm);
 
 		System.out.println("Flight Method: " + request.getParameter("flightMethod"));
 		System.out.println(flightSearchForm);
