@@ -1,8 +1,5 @@
 package com.airline.athena.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -12,28 +9,29 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.airline.athena.model.Airport;
-import com.airline.athena.model.FlightSearchForm;
-import com.airline.athena.repository.AirportRepository;
+import com.airline.athena.model.enums.FlightMethod;
+import com.airline.athena.model.forms.FlightSearchForm;
+import com.airline.athena.service.FlightSearchService;
 
 @Controller
 public class BookAFlightController {
+//	@Autowired
+//	private AirportRepository airportRepository;
 	@Autowired
-	private AirportRepository airportRepository;
+	private FlightSearchService fligthSearchService;
 
-	@GetMapping("/airports")
-	public @ResponseBody List<String> getAirports() {
-		List<String> airportIds = new ArrayList<>();
-		List<Airport> airports = airportRepository.findAll();
-
-		for (Airport airport : airports) {
-			airportIds.add(airport.getAirportId() + " - " + airport.getCity());
-		}
-
-		return airportIds;
-	}
+//	@GetMapping("/airports")
+//	public @ResponseBody List<String> getAirports() {
+//		List<String> airportIds = new ArrayList<>();
+//		List<Airport> airports = airportRepository.findAll();
+//
+//		for (Airport airport : airports) {
+//			airportIds.add(airport.getAirportId() + " - " + airport.getCity());
+//		}
+//
+//		return airportIds;
+//	}
 
 	@GetMapping("/")
 	public String getHomeAndSearchForFlights(FlightSearchForm flightSearchForm) {
@@ -49,10 +47,14 @@ public class BookAFlightController {
 			System.out.println(bindingResult.getFieldError());
 			return "home";
 		}
+
 		System.out.println("------------------------------Success---------------------------");
 
-		System.out.println(flightSearchForm);
+		flightSearchForm.setFlightMethod((FlightMethod.valueOf(request.getParameter("flightMethod"))));
+		FlightSearchService.getFlightSearchResults(modelMap, flightSearchForm);
+
 		System.out.println("Flight Method: " + request.getParameter("flightMethod"));
+		System.out.println(flightSearchForm);
 
 		return "flight-search-results";
 	}

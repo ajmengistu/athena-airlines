@@ -1,4 +1,4 @@
-package com.airline.athena.model;
+package com.airline.athena.model.enums;
 
 public enum SeatType {
 	ECONOMY("ECONOMY"), FIRSTCLASS("FIRSTCLASS"), BUSINESS("BUSINESS");

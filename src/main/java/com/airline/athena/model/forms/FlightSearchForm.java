@@ -1,4 +1,4 @@
-package com.airline.athena.model;
+package com.airline.athena.model.forms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,9 +7,13 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import com.airline.athena.model.enums.FlightMethod;
+import com.airline.athena.model.enums.SeatType;
+
 public class FlightSearchForm {
 	private static List<SeatType> seatTypes = new ArrayList<SeatType>(Arrays.asList(SeatType.values()));
 
+	public FlightMethod flightMethod;
 	@NotBlank(message = "*Please enter a valid origin.")
 	private String from;
 	@NotBlank(message = "*Please enter a valid destination.")
@@ -60,6 +64,14 @@ public class FlightSearchForm {
 
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
+	}
+	
+	public FlightMethod getFlightMethod() {
+		return flightMethod;
+	}
+	
+	public void setFlightMethod(FlightMethod flightMethod) {
+		this.flightMethod = flightMethod;
 	}
 
 	@Override
