@@ -41,8 +41,9 @@
 		</p>
 		<p class="" style="font-size: 28px;">
 			<span class="text-success">Depart&nbsp;</span><span
-				style="color: rgb(6, 6, 124)"><span th:text="${departureCityAndArrivalCity}"></span></span><br> <span style="font-size: 20px; color: grey">
-				Thursday, May 30, 2019</span>
+				style="color: rgb(6, 6, 124)" th:text="${departureCityAndArrivalCity}">
+				</span><br> <span
+				style="font-size: 20px; color: grey" th:text="${formatedDepartureDate}"> </span>
 		</p>
 	</div>
 
@@ -71,7 +72,7 @@
 					<td><span th:text="${flight.dest}"></span> <br> <span
 						th:text="${flight.arrivalTime()}"></span> <br></td>
 
-					<td>NonStop</td>
+					<td>Nonstop</td>
 
 					<td th:text="${flight.flightDuration()}"></td>
 
@@ -79,31 +80,25 @@
 						th:text="${airfare.get(0).getAirfare()}"></span><br> <span
 						style="color: red; font-size: 14px;"
 						th:if="${flight.economySeats < 10 and flight.economySeats > 0}">
-						<span  th:text="${flight.economySeats}">						
-						</span>
-						<span
+							<span th:text="${flight.economySeats}"> </span> <span
 							style="color: red;"> tickets left</span>
-						
-						
-						
-						</span><br> <a
-						class="btn btn-outline-primary btn-sm mt-2"
+
+
+
+					</span><br> <a class="btn btn-outline-primary btn-sm mt-2"
 						th:href="@{book-a-flight/your-trip-summary(chosenFlightId=${flight.flightId},seatType=economy)}">Select</a>
 					</td>
 
-					<td style="color: blue; " >$<span
+					<td style="color: blue;">$<span
 						th:text="${airfare.get(1).getAirfare()}"></span><br> <span
-						style="color:red;font-size: 14px; "
-						th:if="${flight.businessSeats < 10 and flight.businessSeats > 0}"> 
-						<span style="color: red" th:text="${flight.businessSeats}">
-						
-						</span>			
-						<span
-							style="color: red;"> tickets left</span>
-						
-						
-						</span><br> <a
-						class="btn btn-outline-primary btn-sm mt-2"
+						style="color: red; font-size: 14px;"
+						th:if="${flight.businessSeats < 10 and flight.businessSeats > 0}">
+							<span style="color: red" th:text="${flight.businessSeats}">
+
+						</span> <span style="color: red;"> tickets left</span>
+
+
+					</span><br> <a class="btn btn-outline-primary btn-sm mt-2"
 						th:href="@{book-a-flight/your-trip-summary(chosenFlightId=${flight.flightId}, seatType=business)}">Select</a></td>
 
 					<td style="color: blue">$<span

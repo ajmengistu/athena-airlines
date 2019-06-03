@@ -1,5 +1,7 @@
 package com.airline.athena.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,8 @@ public class FlightSearchService {
 		return scheduledFlightRepository.findAll();
 	}
 
-	public String getDepartingDate() {
-		return "";
+	public void getDepartureDate(FlightSearchForm flightSearchForm, ModelMap modelMap) {
+		String date = new SimpleDateFormat("EEEE, MMMM dd, yyyy").format(flightSearchForm.getDepartureDate());
+		modelMap.put("formatedDepartureDate", date);
 	}
 }

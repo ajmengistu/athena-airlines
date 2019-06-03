@@ -56,6 +56,7 @@ public class BookAFlightController {
 
 		flightSearchForm.setFlightMethod((FlightMethod.valueOf(request.getParameter("flightMethod"))));
 		flightSearchService.getFlightSearchResults(modelMap, flightSearchForm);
+		flightSearchService.getDepartureDate(flightSearchForm, modelMap);
 		flightCostService.getFlightCosts(modelMap);
 		airportService.getDepartingCityAirportAndArrivalCityAirport(flightSearchForm, modelMap);
 
