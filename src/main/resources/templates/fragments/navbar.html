@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+	
+</head>
+<body>
+	<div class="container" th:fragment="navbar">
+		<nav class="navbar navbar-light">
+			<span class="navbar-brand mb-0 h1" style="font-size: 35px;
+                    color: rgb(45, 45, 100)"><a
+				href="/" style="text-decoration: none; color: inherit;">Athena Airlines</a></span> <span
+				class="navbar-brand mb-0 h1"><a href="/"
+				style="text-decoration: none;"> <img
+					th:src="@{/images/logo.jpg}" alt="" width="50%"></a> </span> <span
+				class="text-primary">Plan Travel</span> <span class="text-primary">Travel
+				Information</span> <span class="text-primary">Athena Airlines
+				Advantage</span> <span class="text-primary">Deals &amp; offers</span> <span>Sign
+				In</span>
+		</nav>
+	</div>
+</body>
+</html>

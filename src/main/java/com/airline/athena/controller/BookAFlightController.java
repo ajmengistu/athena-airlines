@@ -7,14 +7,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.airline.athena.model.FlightCost;
-import com.airline.athena.model.ScheduledFlight;
 import com.airline.athena.model.enums.FlightMethod;
 import com.airline.athena.model.forms.FlightSearchForm;
 import com.airline.athena.service.AirportService;
@@ -35,10 +32,10 @@ public class BookAFlightController {
 		return airportService.getAll();
 	}
 
-	@GetMapping("/scheduledFlights")
-	public @ResponseBody List<ScheduledFlight> getAll() {
-		return flightSearchService.getAll();
-	}
+//	@GetMapping("/scheduledFlights")
+//	public @ResponseBody List<ScheduledFlight> getAll() {
+//		return flightSearchService.getAll();
+//	}
 
 	@GetMapping("/")
 	public String getHomeAndSearchForFlights(FlightSearchForm flightSearchForm) {
@@ -46,7 +43,7 @@ public class BookAFlightController {
 	}
 
 	@GetMapping("/search-flights/book-a-flight")
-	public String submitFlightForm(@Valid FlightSearchForm flightSearchForm, BindingResult bindingResult, Model model,
+	public String submitFlightForm(@Valid FlightSearchForm flightSearchForm, BindingResult bindingResult,
 			ModelMap modelMap, HttpServletRequest request) {
 
 		if (bindingResult.hasErrors()) {
@@ -60,11 +57,11 @@ public class BookAFlightController {
 		flightSearchForm.setFlightMethod((FlightMethod.valueOf(request.getParameter("flightMethod"))));
 		flightSearchService.getFlightSearchResults(modelMap, flightSearchForm);
 		flightCostService.getFlightCosts(modelMap);
+		airportService.getDepartingCityAirportAndArrivalCityAirport(flightSearchForm, modelMap);
 
 		System.out.println(flightSearchForm);
 
 		return "flight-search-results";
 	}
-	// Use lamda expressions
-	// https://www.baeldung.com/java-8-lambda-expressions-tips
+
 }

@@ -18,7 +18,7 @@ public class FlightSearchService {
 
 	public void getFlightSearchResults(ModelMap modelMap, FlightSearchForm flightSearchForm) {
 
-		// Get only the Airline code. "LAX - Los Angeles" -> "LAX" 
+		// Get only the Airline code. "LAX - Los Angeles" -> "LAX"
 		flightSearchForm.setFrom(flightSearchForm.getFrom().split(" ")[0]);
 		flightSearchForm.setTo(flightSearchForm.getTo().split(" ")[0]);
 
@@ -28,5 +28,9 @@ public class FlightSearchService {
 
 	public List<ScheduledFlight> getAll() {
 		return scheduledFlightRepository.findAll();
+	}
+
+	public String getDepartingDate() {
+		return "";
 	}
 }

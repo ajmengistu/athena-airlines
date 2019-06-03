@@ -20,18 +20,30 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 </head>
 <body>
 
+	<div th:replace="fragments/navbar.html :: navbar"></div>
+	<!-- Navigation bar START-->
 	<div class="container">
-		<h1>Choose flights</h1>
-		<h4 class="">
-			Depart Washington, DC to Los Angeles, CA <br> Thursday, May 30,
-			2019
-		</h4>
-		<button type="button" class="btn btn-outline-primary">Primary</button>
+		<hr>
+		<p style="font-size: 30px; color: rgb(16, 130, 236)">Choose
+			flights</p>
+		<p style="color: rgb(16, 130, 236)">
+			<i class="fa
+                    fa-angle-double-left"
+				aria-hidden="true"></i><a style="text-decoration: none;" href="/">&nbsp;New
+				search</a>
+		</p>
+		<p class="" style="font-size: 28px;">
+			<span class="text-success">Depart&nbsp;</span><span
+				style="color: rgb(6, 6, 124)"><span th:text="${departureCityAndArrivalCity}"></span></span><br> <span style="font-size: 20px; color: grey">
+				Thursday, May 30, 2019</span>
+		</p>
 	</div>
 
 
@@ -56,30 +68,57 @@
 						th:text="${flight.departingTime()}"></span><br> <span
 						th:text="${flight.flightId}"></span></td>
 
-
 					<td><span th:text="${flight.dest}"></span> <br> <span
 						th:text="${flight.arrivalTime()}"></span> <br></td>
-					<td>NonStop</td>
-					<td th:text="${flight.flightDuration()}"></td>
-					<td>$<span th:text="${airfare.get(0).getAirfare()}"></span><br>
-						<span th:text="${flight.economySeats}"></span><br> <!-- 					<form id="fa" method="get" th:action="@{book-a-flight/your-trip-summary(selectedFareId=${flight.flightId})}">
-							<input type="submit" class="btn btn-outline-primary btn-lg mt-2">
-							
-						</form>  --> <a class="btn btn-outline-primary btn-lg mt-2"
-						th:href="@{book-a-flight/your-trip-summary(chosenFlightId=${flight.flightId})}">Select</a>
-					</td>
-					<td>$<span th:text="${airfare.get(1).getAirfare()}"></span><br>
-						<span th:text="${flight.businessSeats}"></span></td>
-					<td>$<span th:text="${airfare.get(2).getAirfare()}"></span><br>
-						<span th:text="${flight.firstClassSeats}"></span></td>
-					<!-- <td><span>One way</span><br> $<span
-						th:text="${seats.get(iter.index).get(0).cost}"></span><br> <span
-						th:text="${seats.get(iter.index).get(0).numSeats}"></span></td>
 
-					<td>$<span th:text="${seats.get(iter.index).get(1).cost}"></span></td> -->
+					<td>NonStop</td>
+
+					<td th:text="${flight.flightDuration()}"></td>
+
+					<td style="color: blue">$<span
+						th:text="${airfare.get(0).getAirfare()}"></span><br> <span
+						style="color: red; font-size: 14px;"
+						th:if="${flight.economySeats < 10 and flight.economySeats > 0}">
+						<span  th:text="${flight.economySeats}">						
+						</span>
+						<span
+							style="color: red;"> tickets left</span>
+						
+						
+						
+						</span><br> <a
+						class="btn btn-outline-primary btn-sm mt-2"
+						th:href="@{book-a-flight/your-trip-summary(chosenFlightId=${flight.flightId},seatType=economy)}">Select</a>
+					</td>
+
+					<td style="color: blue; " >$<span
+						th:text="${airfare.get(1).getAirfare()}"></span><br> <span
+						style="color:red;font-size: 14px; "
+						th:if="${flight.businessSeats < 10 and flight.businessSeats > 0}"> 
+						<span style="color: red" th:text="${flight.businessSeats}">
+						
+						</span>			
+						<span
+							style="color: red;"> tickets left</span>
+						
+						
+						</span><br> <a
+						class="btn btn-outline-primary btn-sm mt-2"
+						th:href="@{book-a-flight/your-trip-summary(chosenFlightId=${flight.flightId}, seatType=business)}">Select</a></td>
+
+					<td style="color: blue">$<span
+						th:text="${airfare.get(2).getAirfare()}"></span><br> <span
+						th:if="${flight.firstClassSeats < 10 and flight.firstClassSeats > 0}"
+						style="color: red; font-size: 14px;"> <span
+							th:text="${flight.firstClassSeats}"></span> <span
+							style="color: red;"> tickets left</span>
+					</span> <br> <a class="btn btn-outline-primary btn-sm mt-2"
+						th:href="@{book-a-flight/your-trip-summary(chosenFlightId=${flight.flightId}, seatType=firstclass)}">Select</a></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
+
+
 </body>
 </html>

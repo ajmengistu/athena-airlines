@@ -31,24 +31,14 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="icon" href="logo.jpg">
+<link rel="icon" th:href="@{/images/logo.jpg}">
 <title>Athena Airlines | Home</title>
 </head>
 <body>
 	<!-- Navigation bar START-->
-	<div class="container">
-		<nav class="navbar navbar-light">
-			<span class="navbar-brand mb-0 h1" style="font-size: 30px;"><a
-				href="/" style="text-decoration: none;">Athena Airlines</a></span> <span
-				class="navbar-brand mb-0 h1"><a href="/"
-				style="text-decoration: none;"> <img src="logo.jpg" alt=""
-					width="50%"></a> </span> <span class="text-primary">Plan Travel</span> <span
-				class="text-primary">Travel Information</span> <span
-				class="text-primary">Athena Airlines Advantage</span> <span
-				class="text-primary">Deals & offers</span> <span>Sign In</span>
-		</nav>
-	</div>
+	<div th:replace="fragments/navbar.html :: navbar"></div>
 	<!-- Navigation bar END-->
+	
 	<!-- Image Carousel START-->
 	<!-- Image Carousel END-->
 	<!-- Form: Book a Flight, Check-in, Flight status START-->
@@ -75,8 +65,7 @@
 					<div
 						class="custom-control custom-radio
                      custom-control-inline mb-4 mt-4">
-						<input type="radio" id="customRadioInline1"
-							 value="ONEWAY"
+						<input type="radio" id="customRadioInline1" value="ONEWAY"
 							name="flightMethod" class="custom-control-input"
 							onclick="removeReturnDateBox()" checked="checked"> <label
 							class="custom-control-label" for="customRadioInline1">One
@@ -85,8 +74,7 @@
 					<div
 						class="custom-control custom-radio
                      custom-control-inline">
-						<input type="radio" name="flightMethod"
-							value="ROUNDTRIP"
+						<input type="radio" name="flightMethod" value="ROUNDTRIP"
 							class="custom-control-input" onclick="showReturnDateBox()"
 							id="customRadioInline2"> <label
 							class="custom-control-label" for="customRadioInline2">Round
@@ -123,21 +111,19 @@
 					</div>
 					<div class="form-row">
 						<div class="col-md-3 mb-3">
-                        <label for="validationServer03">Depart*</label>
-                        <input type="text" 
-                           class="form-control" id="todaysDate"  
-                            value="05/25/2019" th:field="*{departureDate}"
-                           placeholder=""
-                           required>
-                           
-                        <div class="invalid-feedback">
-                           Please provide a valid depart date.
-                        </div>
+							<label for="validationServer03">Depart*</label> <input
+								type="text" class="form-control" id="todaysDate"
+								value="05/25/2019" th:field="*{departureDate}" placeholder=""
+								required>
+
+							<div class="invalid-feedback">Please provide a valid depart
+								date.</div>
 						</div>
 						<div class="col-md-3 mb-3" id="returnDate" style="display: none">
 							<label for="validationServer04">Return*</label> <input
 								type="text" class="form-control" id="futureReturnDate"
-								th:field="*{returnDate}" value="05/25/2019" placeholder="" required>
+								th:field="*{returnDate}" value="05/25/2019" placeholder=""
+								required>
 							<div class="invalid-feedback">Please provide a valid return
 								date.</div>
 						</div>
@@ -274,8 +260,8 @@
 			var yyyy = today.getFullYear();
 
 			today = mm + '/' + dd + '/' + yyyy;
-	return today;
-	}
+			return today;
+		}
 
 		function futureDate() {
 			var someDate = new Date();
@@ -316,7 +302,7 @@
 			type : 'get',
 			dataType : 'json',
 			success : function(data) {
-				console.log(data)
+
 				$(function() {
 					$("#fromAirports").autocomplete({
 						source : data,

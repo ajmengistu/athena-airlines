@@ -10,7 +10,7 @@ public class Airport {
 	@Column(length = 3, nullable = false, unique = true)
 	private String airportId;
 
-	@Column(length = 20, nullable = false)
+	@Column(length = 100, nullable = false)
 	private String city;
 
 	@Column(length = 100, nullable = false)
