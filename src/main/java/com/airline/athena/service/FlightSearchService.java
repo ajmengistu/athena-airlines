@@ -1,7 +1,6 @@
 package com.airline.athena.service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +25,17 @@ public class FlightSearchService {
 
 		modelMap.addAttribute("flights", scheduledFlightRepository.findBySourceAndDestAndLocalDepartingDate(
 				flightSearchForm.getFrom(), flightSearchForm.getTo(), flightSearchForm.getDepartureDate()));
+		modelMap.put("formatedDepartureDate", this.getDepartureDate(flightSearchForm));
+		modelMap.put("selectedNumPassengers", flightSearchForm.getNumPassengers());
 	}
 
 	public List<ScheduledFlight> getAll() {
 		return scheduledFlightRepository.findAll();
 	}
 
-	public void getDepartureDate(FlightSearchForm flightSearchForm, ModelMap modelMap) {
+	public String getDepartureDate(FlightSearchForm flightSearchForm) {
 		String date = new SimpleDateFormat("EEEE, MMMM dd, yyyy").format(flightSearchForm.getDepartureDate());
-		modelMap.put("formatedDepartureDate", date);
+		return date;
 	}
+
 }

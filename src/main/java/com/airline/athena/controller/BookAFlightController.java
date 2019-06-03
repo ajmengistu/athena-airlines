@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.airline.athena.model.enums.FlightMethod;
 import com.airline.athena.model.forms.FlightSearchForm;
@@ -19,6 +20,7 @@ import com.airline.athena.service.FlightCostService;
 import com.airline.athena.service.FlightSearchService;
 
 @Controller
+@SessionAttributes({ "selectedNumPassengers" })
 public class BookAFlightController {
 	@Autowired
 	private FlightSearchService flightSearchService;
@@ -27,15 +29,11 @@ public class BookAFlightController {
 	@Autowired
 	private FlightCostService flightCostService;
 
+	// DO NOT REMOVE THIS: needed for front-end auto-complete jQuery request.
 	@GetMapping("/airports")
 	public @ResponseBody List<String> getAirports() {
 		return airportService.getAll();
 	}
-
-//	@GetMapping("/scheduledFlights")
-//	public @ResponseBody List<ScheduledFlight> getAll() {
-//		return flightSearchService.getAll();
-//	}
 
 	@GetMapping("/")
 	public String getHomeAndSearchForFlights(FlightSearchForm flightSearchForm) {
@@ -56,7 +54,6 @@ public class BookAFlightController {
 
 		flightSearchForm.setFlightMethod((FlightMethod.valueOf(request.getParameter("flightMethod"))));
 		flightSearchService.getFlightSearchResults(modelMap, flightSearchForm);
-		flightSearchService.getDepartureDate(flightSearchForm, modelMap);
 		flightCostService.getFlightCosts(modelMap);
 		airportService.getDepartingCityAirportAndArrivalCityAirport(flightSearchForm, modelMap);
 
