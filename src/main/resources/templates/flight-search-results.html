@@ -1,1 +1,85 @@
-<h1>Flight Search results!</h1>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Choose a flight</title>
+
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+	<div class="container">
+		<h1>Choose flights</h1>
+		<h4 class="">
+			Depart Washington, DC to Los Angeles, CA <br> Thursday, May 30,
+			2019
+		</h4>
+		<button type="button" class="btn btn-outline-primary">Primary</button>
+	</div>
+
+
+	<div class="container">
+		<hr>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Depart</th>
+					<th scope="col">Arrive</th>
+					<th scope="col">Stops</th>
+					<th scope="col">Duration</th>
+					<th scope="col">Economy</th>
+					<th scope="col">Business</th>
+					<th scope="col">First Class</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr th:each="flight,iter : ${flights}">
+					<td><span th:text="${flight.source}"></span> <br> <span
+						th:text="${flight.departingTime()}"></span><br> <span
+						th:text="${flight.flightId}"></span></td>
+
+
+					<td><span th:text="${flight.dest}"></span> <br> <span
+						th:text="${flight.arrivalTime()}"></span> <br></td>
+					<td>NonStop</td>
+					<td th:text="${flight.flightDuration()}"></td>
+					<td>$<span th:text="${airfare.get(0).getAirfare()}"></span><br>
+						<span th:text="${flight.economySeats}"></span><br> <!-- 					<form id="fa" method="get" th:action="@{book-a-flight/your-trip-summary(selectedFareId=${flight.flightId})}">
+							<input type="submit" class="btn btn-outline-primary btn-lg mt-2">
+							
+						</form>  --> <a class="btn btn-outline-primary btn-lg mt-2"
+						th:href="@{book-a-flight/your-trip-summary(chosenFlightId=${flight.flightId})}">Select</a>
+					</td>
+					<td>$<span th:text="${airfare.get(1).getAirfare()}"></span><br>
+						<span th:text="${flight.businessSeats}"></span></td>
+					<td>$<span th:text="${airfare.get(2).getAirfare()}"></span><br>
+						<span th:text="${flight.firstClassSeats}"></span></td>
+					<!-- <td><span>One way</span><br> $<span
+						th:text="${seats.get(iter.index).get(0).cost}"></span><br> <span
+						th:text="${seats.get(iter.index).get(0).numSeats}"></span></td>
+
+					<td>$<span th:text="${seats.get(iter.index).get(1).cost}"></span></td> -->
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

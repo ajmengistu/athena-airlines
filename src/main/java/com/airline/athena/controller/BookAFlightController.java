@@ -13,26 +13,27 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.airline.athena.model.FlightCost;
 import com.airline.athena.model.ScheduledFlight;
 import com.airline.athena.model.enums.FlightMethod;
 import com.airline.athena.model.forms.FlightSearchForm;
+import com.airline.athena.service.AirportService;
+import com.airline.athena.service.FlightCostService;
 import com.airline.athena.service.FlightSearchService;
 
 @Controller
 public class BookAFlightController {
-	private FlightSearchService flightSearchService = new FlightSearchService();
+	@Autowired
+	private FlightSearchService flightSearchService;
+	@Autowired
+	private AirportService airportService;
+	@Autowired
+	private FlightCostService flightCostService;
 
-//	@GetMapping("/airports")
-//	public @ResponseBody List<String> getAirports() {
-//		List<String> airportIds = new ArrayList<>();
-//		List<Airport> airports = airportRepository.findAll();
-//
-//		for (Airport airport : airports) {
-//			airportIds.add(airport.getAirportId() + " - " + airport.getCity());
-//		}
-//
-//		return airportIds;
-//	}
+	@GetMapping("/airports")
+	public @ResponseBody List<String> getAirports() {
+		return airportService.getAll();
+	}
 
 	@GetMapping("/scheduledFlights")
 	public @ResponseBody List<ScheduledFlight> getAll() {
@@ -57,12 +58,13 @@ public class BookAFlightController {
 		System.out.println("------------------------------Success---------------------------");
 
 		flightSearchForm.setFlightMethod((FlightMethod.valueOf(request.getParameter("flightMethod"))));
-
 		flightSearchService.getFlightSearchResults(modelMap, flightSearchForm);
+		flightCostService.getFlightCosts(modelMap);
 
-		System.out.println("Flight Method: " + request.getParameter("flightMethod"));
 		System.out.println(flightSearchForm);
 
 		return "flight-search-results";
 	}
+	// Use lamda expressions
+	// https://www.baeldung.com/java-8-lambda-expressions-tips
 }

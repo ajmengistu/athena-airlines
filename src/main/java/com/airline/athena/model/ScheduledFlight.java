@@ -42,13 +42,13 @@ public class ScheduledFlight {
 	@Column(nullable = false)
 	private Date localArrivalDateTime;
 
-	@Column(nullable = false, table = "flight_schedule_details")
+	@Column(nullable = false, table = "scheduled_flights_details")
 	private Integer economySeats;
 
-	@Column(nullable = false, table = "flight_schedule_details")
+	@Column(nullable = false, table = "scheduled_flights_details")
 	private Integer businessSeats;
 
-	@Column(nullable = false, table = "flight_schedule_details")
+	@Column(nullable = false, table = "scheduled_flights_details")
 	private Integer firstclassSeats;
 
 	public Integer getEconomySeats() {

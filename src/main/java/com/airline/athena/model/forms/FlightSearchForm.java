@@ -65,11 +65,11 @@ public class FlightSearchForm {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
-	
+
 	public FlightMethod getFlightMethod() {
 		return flightMethod;
 	}
-	
+
 	public void setFlightMethod(FlightMethod flightMethod) {
 		this.flightMethod = flightMethod;
 	}
@@ -77,7 +77,8 @@ public class FlightSearchForm {
 	@Override
 	public String toString() {
 		return "[From: " + this.from + ", To: " + this.to + ", departureDate: " + this.departureDate + ", Passengers: "
-				+ this.numPassengers + ", returnDate: " + this.returnDate + "]";
+				+ this.numPassengers + ", returnDate: " + this.returnDate + ", Flight Method: "
+				+ this.flightMethod.toString() + "]";
 
 	}
 }

@@ -16,13 +16,14 @@ public class FlightSearchService {
 	@Autowired
 	private ScheduledFlightRepository scheduledFlightRepository;
 
-	public boolean getFlightSearchResults(ModelMap modelMap, FlightSearchForm flightSearchForm) {
+	public void getFlightSearchResults(ModelMap modelMap, FlightSearchForm flightSearchForm) {
 
-		modelMap.addAttribute("flight", scheduledFlightRepository.findBySourceAndDestAndLocalDepartingDate(
+		// Get only the Airline code. "LAX - Los Angeles" -> "LAX" 
+		flightSearchForm.setFrom(flightSearchForm.getFrom().split(" ")[0]);
+		flightSearchForm.setTo(flightSearchForm.getTo().split(" ")[0]);
+
+		modelMap.addAttribute("flights", scheduledFlightRepository.findBySourceAndDestAndLocalDepartingDate(
 				flightSearchForm.getFrom(), flightSearchForm.getTo(), flightSearchForm.getDepartureDate()));
-//		modelMap.addAttribute("airfare", )
-
-		return false;
 	}
 
 	public List<ScheduledFlight> getAll() {
