@@ -21,6 +21,7 @@ import com.airline.athena.model.forms.FlightSearchForm;
 import com.airline.athena.service.AirportService;
 import com.airline.athena.service.FlightCostService;
 import com.airline.athena.service.FlightSearchService;
+import com.airline.athena.service.PassengerService;
 
 @Controller
 @SessionAttributes({ "selectedNumPassengers", "selectedFlightId", "selectedFlightMethod" })
@@ -31,6 +32,8 @@ public class BookAFlightController {
 	private AirportService airportService;
 	@Autowired
 	private FlightCostService flightCostService;
+	@Autowired
+	private PassengerService passengerService;
 
 	// DO NOT REMOVE THIS: needed for front-end auto-complete jQuery request.
 	@GetMapping("/airports")
@@ -77,7 +80,7 @@ public class BookAFlightController {
 
 	@PostMapping("/search-flights/book-a-flight/review-and-pay")
 	public String submitPassengerForm(ModelMap modelMap, HttpServletRequest request) {
-		flightSearchService.submitPassengerForm(modelMap, request);
+		passengerService.submitPassengerForm(modelMap, request);
 		return "review-and-pay";
 	}
 

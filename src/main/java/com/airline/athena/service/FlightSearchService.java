@@ -61,29 +61,4 @@ public class FlightSearchService {
 				scheduledFlight.getDest(), modelMap);
 
 	}
-
-	public void submitPassengerForm(ModelMap modelMap, HttpServletRequest request) {
-		Integer numOfPass = Integer.valueOf((Integer) modelMap.get("selectedNumPassengers"));
-
-		List<Long> passengerIds = new ArrayList<Long>();
-
-		for (int i = 0; i < numOfPass; i++) {
-			System.out.println(request.getParameter("firstName" + (i + 1)));
-			System.out.println(request.getParameter("lastName" + (i + 1)));
-			System.out.println(request.getParameter("middleName" + (i + 1)));
-			System.out.println(request.getParameter((i + 1) + "birthday"));
-			System.out.println(request.getParameter("gender" + (i + 1)));
-
-			Date date;
-			try {
-				String dob = request.getParameter((i + 1) + "birthday");
-
-				date = new SimpleDateFormat("MM/dd/yyyy").parse(dob);
-
-				System.out.println(date);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 }
