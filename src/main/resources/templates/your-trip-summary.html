@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Your trip summary | Athena Airlines</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+	<div th:replace="fragments/navbar :: navbar"></div>
+
+	<div class="container">
+		<hr>
+		<p style="font-size: 30px; color: rgb(16, 130, 236)">Choose
+			flights</p>
+		<p style="color: rgb(16, 130, 236)">
+			<i class="fa
+                    fa-angle-double-left"
+				aria-hidden="true"></i><a style="text-decoration: none;" href="/">&nbsp;New
+				search</a>
+		</p>
+		<p style="color: rgb(6, 6, 124); font-size: 30px;">Your trip
+			summary</p>
+		<div class="row">
+			<div class="col-4" style="background-color: rgb(246, 246, 246)">
+				<div class="row mt-4 ml-4">
+					<p th:text="${flightCost.getSeatType()}"></p>
+				</div>
+				<div class="row ml-4">
+					<span th:text="${selectedFlightMethod}"></span>&nbsp;(Non-refundable)
+				</div>
+				<div class="row ml-4">
+					<span style="color: blue; font-size: 40px;"> $<span
+						th:text="${flightCost.getAirfare()}"></span></span> per person
+				</div>
+				<div class="row ml-4 mb-4">
+					Total: $<span th:text="${totalCost}"></span>&nbsp;(all passengers)
+				</div>
+			</div>
+			<div class="col-8 border border-dark">
+				<div class="row ml-4 mt-4">
+					<p class="" style="font-size: 23px;">
+						<span class="text-success">Depart&nbsp;</span><span
+							style="color: rgb(6, 6, 124)"
+							th:text="${departureCityAndArrivalCity}"> </span> <br> <span
+							style="font-size: 20px; color: grey"
+							th:text="${formatedDepartureDate}"></span>
+					</p>
+				</div>
+				<div style="font-size: 20px;" class="row ml-4">
+					<p th:text="${selectedFlight.departingTime()}" class=""></p>
+					&nbsp; <i class="ml-4 fa fa-arrow-circle-right" aria-hidden="true"></i>
+					<p class="ml-4" th:text="${selectedFlight.arrivalTime()}"></p>
+					<p class="ml-4" th:text="${selectedFlight.flightDuration()}"></p>
+					<p class="ml-4">Nonstop</p>
+					<p class="ml-4" th:text="${flightCost.getSeatType()}"></p>
+				</div>
+				<div style="font-size: 15px;" class="row ml-4">
+					<p th:text="${selectedFlight.getFlightId()}"></p>
+				</div>
+
+			</div>
+
+
+		</div>
+	</div>
+
+
+	<div class="container">
+
+
+		<!-- <p th:text="${flight.departingTime()}"></p>
+         <p th:text="${flight.arrivalTime()}"></p>
+         <p th:text="${flight.source}"></p>
+         <p th:text="${flight.dest}"></p> -->
+		<!-- <p th:text="${airfare.getAirfare()}"></p> -->
+		<!-- <p th:text="${total}"></p>
+            <p th:text="${selectedNumPassengers}"></p> -->
+
+
+
+		<hr>
+		<div class="row">
+			<div class="col">
+				<h2>Passenger details</h2>
+				<br>
+				<p>Passenger 1</p>
+				<form method="post"
+					th:action="@{/search-flights/book-a-flight/review-and-pay}"
+					class="needs-validation" id="form" novalidate>
+					<div th:each="passenger : ${passengers}">
+						<div class="form-row">
+							<div class="col-md-4 mb-3">
+								<label for="validationCustom01">First name</label> <input
+									type="text" class="form-control"
+									th:name="'firstName'+${passenger}" placeholder="First name"
+									required>
+								<div class="valid-feedback">Looks good!</div>
+								<div class="invalid-feedback">Please enter a valid first
+									name!</div>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="validationCustom02">Middle name</label> <input
+									th:name="'middleName'+${passenger}" type="text"
+									class="form-control" id="validationCustom02"
+									placeholder="Last name">
+								<div class="valid-feedback">Looks good!</div>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="validationCustom02">Last name</label> <input
+									type="text" class="form-control" id="validationCustom02"
+									th:name="'lastName'+${passenger}" placeholder="Last name"
+									required>
+								<div class="valid-feedback">Looks good!</div>
+								<div class="invalid-feedback">Please enter a valid last
+									name!</div>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="col-md-4 mb-3">
+								<label for="validationCustom03">Date of birth</label><br> <input
+									class="form-control" id="validationCustom02" type="text"
+									th:name="${passenger}+'birthday'" value=""
+									placeholder="mm/dd/yyyy" required>
+								<div class="invalid-feedback">Please provide a valid
+									birthday!</div>
+							</div>
+							<div class="col-md-4 mb-3">
+								<label for="validationCustom02">Gender</label> <select
+									th:name="'gender'+${passenger}" class="form-control"
+									id="exampleFormControlSelect1" required>
+									<option></option>
+									<option value="MALE">MALE</option>
+									<option value="FEMALE">FEMALE</option>
+									<option value="OTHER">OTHER</option>
+								</select>
+								<div class="valid-feedback">Looks good!</div>
+								<div class="invalid-feedback">Please provide a valid
+									gender!</div>
+							</div>
+						</div>
+						<div th:if="${passengers.size()!=passenger}">
+							<br>
+							<hr>
+							<br> Passenger <span th:text="${passenger+1}"></span>
+						</div>
+						<br>
+					</div>
+					<div class="form-group">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=""
+								id="invalidCheck" required> <label
+								class="form-check-label" for="invalidCheck"> Agree to
+								terms and conditions </label>
+							<div class="invalid-feedback">You must agree before
+								submitting.</div>
+						</div>
+					</div>
+				</form>
+				<hr>
+				<input form="form" class="btn btn-primary" type="submit"
+					value="Continue">
+			</div>
+		</div>
+	</div>
+	<script>
+		$(function() {
+
+			$('input[name$="birthday"]').daterangepicker({
+				autoUpdateInput : false,
+				locale : {
+					cancelLabel : 'Clear'
+				},
+				singleDatePicker : true,
+				showDropdowns : true,
+				minYear : 1901,
+				maxYear : parseInt(moment().format('YYYY'), 10)
+			}, function(start, end, label) {
+				var years = moment().diff(start, 'years');
+				//alert("You are " + years + " years old!");
+			});
+
+			$('input[name$="birthday"]').on('apply.daterangepicker',
+					function(ev, picker) {
+						$(this).val(picker.startDate.format('MM/DD/YYYY'));
+					});
+			$('input[name$="birthday"]').on('cancel.daterangepicker',
+					function(ev, picker) {
+						$(this).val('');
+					});
+		});
+	</script>
+	<script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
+			window.addEventListener('load',
+					function() {
+						// Fetch all the forms we want to apply custom Bootstrap validation styles to
+						var forms = document
+								.getElementsByClassName('needs-validation');
+						// Loop over them and prevent submission
+						var validation = Array.prototype.filter.call(forms,
+								function(form) {
+									form.addEventListener('submit', function(
+											event) {
+										if (form.checkValidity() === false) {
+											event.preventDefault();
+											event.stopPropagation();
+										}
+										form.classList.add('was-validated');
+									}, false);
+								});
+					}, false);
+		})();
+	</script>
+</body>
+</html>

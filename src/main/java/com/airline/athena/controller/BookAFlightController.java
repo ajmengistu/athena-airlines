@@ -10,17 +10,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.airline.athena.model.enums.FlightMethod;
+import com.airline.athena.model.enums.SeatType;
 import com.airline.athena.model.forms.FlightSearchForm;
 import com.airline.athena.service.AirportService;
 import com.airline.athena.service.FlightCostService;
 import com.airline.athena.service.FlightSearchService;
 
 @Controller
-@SessionAttributes({ "selectedNumPassengers" })
+@SessionAttributes({ "selectedNumPassengers", "selectedFlightId", "selectedFlightMethod" })
 public class BookAFlightController {
 	@Autowired
 	private FlightSearchService flightSearchService;
@@ -60,6 +62,16 @@ public class BookAFlightController {
 		System.out.println(flightSearchForm);
 
 		return "flight-search-results";
+	}
+
+	@GetMapping("/search-flights/book-a-flight/your-trip-summary")
+	public String showTripSummary(ModelMap modelMap, @RequestParam String chosenFlightId,
+			@RequestParam String seatType) {
+		SeatType seatType2 = SeatType.valueOf(seatType.toUpperCase());
+		flightSearchService.showTripSummary(modelMap, seatType2, chosenFlightId);
+		flightCostService.showTripSummary(modelMap, seatType2);
+
+		return "your-trip-summary";
 	}
 
 }

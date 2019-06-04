@@ -28,8 +28,13 @@ public class AirportService {
 	}
 
 	public void getDepartingCityAirportAndArrivalCityAirport(FlightSearchForm flightSearchForm, ModelMap modelMap) {
-		Airport departingAirport = airportRepository.getOne(flightSearchForm.getFrom());
-		Airport arrivalAirport = airportRepository.getOne(flightSearchForm.getTo());
+		this.getDepartingCityAirportAndArrivalCityAirport(flightSearchForm.getFrom(), flightSearchForm.getTo(),
+				modelMap);
+	}
+
+	public void getDepartingCityAirportAndArrivalCityAirport(String departure, String arrival, ModelMap modelMap) {
+		Airport departingAirport = airportRepository.getOne(departure);
+		Airport arrivalAirport = airportRepository.getOne(arrival);
 		System.out.println("---" + departingAirport.getCity() + " to " + arrivalAirport.getCity());
 		modelMap.put("departureCityAndArrivalCity", departingAirport.getCity() + " to " + arrivalAirport.getCity());
 	}
