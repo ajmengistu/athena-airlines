@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -72,6 +73,12 @@ public class BookAFlightController {
 		flightCostService.showTripSummary(modelMap, seatType2);
 
 		return "your-trip-summary";
+	}
+
+	@PostMapping("/search-flights/book-a-flight/review-and-pay")
+	public String submitPassengerForm(ModelMap modelMap, HttpServletRequest request) {
+		flightSearchService.submitPassengerForm(modelMap, request);
+		return "review-and-pay";
 	}
 
 }

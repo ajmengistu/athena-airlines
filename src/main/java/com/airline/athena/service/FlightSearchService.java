@@ -1,8 +1,12 @@
 package com.airline.athena.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,11 +53,37 @@ public class FlightSearchService {
 	public void showTripSummary(ModelMap modelMap, SeatType seatType, String chosenFlightId) {
 		modelMap.put("seatType", seatType.toString());
 		modelMap.put("selectedFlightId", chosenFlightId);
-		
+
 		ScheduledFlight scheduledFlight = scheduledFlightRepository.getOne(chosenFlightId);
 		modelMap.put("selectedFlight", scheduledFlight);
 		modelMap.put("formatedDepartureDate", this.formatDepartureDate(scheduledFlight.getLocalDepartingDate()));
-		airportService.getDepartingCityAirportAndArrivalCityAirport(scheduledFlight.getSource(), scheduledFlight.getDest(), modelMap);
-		
+		airportService.getDepartingCityAirportAndArrivalCityAirport(scheduledFlight.getSource(),
+				scheduledFlight.getDest(), modelMap);
+
+	}
+
+	public void submitPassengerForm(ModelMap modelMap, HttpServletRequest request) {
+		Integer numOfPass = Integer.valueOf((Integer) modelMap.get("selectedNumPassengers"));
+
+		List<Long> passengerIds = new ArrayList<Long>();
+
+		for (int i = 0; i < numOfPass; i++) {
+			System.out.println(request.getParameter("firstName" + (i + 1)));
+			System.out.println(request.getParameter("lastName" + (i + 1)));
+			System.out.println(request.getParameter("middleName" + (i + 1)));
+			System.out.println(request.getParameter((i + 1) + "birthday"));
+			System.out.println(request.getParameter("gender" + (i + 1)));
+
+			Date date;
+			try {
+				String dob = request.getParameter((i + 1) + "birthday");
+
+				date = new SimpleDateFormat("MM/dd/yyyy").parse(dob);
+
+				System.out.println(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }
