@@ -1,1 +1,298 @@
-<h1>Rview</h1>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Review and pay | Athena Airlines</title>
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" th:href="@{/images/logo.jpg}">
+</head>
+<body>
+	<!-- Navigation bar START-->
+	<div th:replace="fragments/navbar.html :: navbar"></div>
+	<!-- Navigation bar END-->
+	<div class="container">
+		<hr>
+		<p style="font-size: 35px; color: rgb(16, 130, 236)">Review and
+			pay</p>
+		<p style="color: rgb(16, 130, 236)">
+			<i class="fa
+                    fa-angle-double-left"
+				aria-hidden="true"></i><a style="text-decoration: none;" href="/">&nbsp;New
+				search</a>
+		</p>
+		<!-- <p style="color: rgb(6, 6, 124); font-size: 30px;">Passengers</p>
+		<div th:each="pass, iter : ${passengersAddedList}">
+		<p>Passenger&nbsp;<span th:text="${iter.count}"></span> </p>
+		<p>	<span th:text="${pass.getFirstName()}"></span>&nbsp;<span th:text="${pass.getMiddleName()}"></span>&nbsp;
+			<span th:text="${pass.getLastName()}"></span><br> Birthday: 09/12/1993 </p>
+			
+			<p th:text="${pass.getBirthday()}"></p>
+		</div> -->
+
+		<p class="" style="font-size: 30px;">
+			<span class="text-success">Depart&nbsp;</span><span
+				style="color: rgb(6, 6, 124)"
+				th:text="${departureCityAndArrivalCity}"> </span> <br> <span
+				style="font-size: 20px; color: grey"
+				th:text="${formatedDepartureDate}"></span>
+		</p>
+
+		<table class="table mb-5">
+			<thead style="background-color: rgb(246, 246, 246)">
+				<tr>
+					<th scope="col">Flight</th>
+					<th scope="col">Depart</th>
+					<th scope="col">Arrive</th>
+					<th scope="col">Duration</th>
+					<th scope="col">Stops</th>
+					<th scope="col">Class</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr style="font-size: 20px;">
+					<td><img alt="" width="40px;" height="40px"
+						th:src="@{/images/logo.jpg}"> <span
+						th:text="${selectedFlight.getFlightId()}"></span></td>
+					<td><span th:text="${selectedFlight.departingTime()}"></span><br>
+						<span style="font-weight: bold;"
+						th:text="${selectedFlight.source}"></span></td>
+					<td><span th:text="${selectedFlight.arrivalTime()}"></span><br>
+						<span style="font-weight: bold;" th:text="${selectedFlight.dest}"></span></td>
+					<td><span th:text="${selectedFlight.flightDuration()}"></span></td>
+					<td><span>Nonstop</span></td>
+					<td><span th:text="${seatType}"></span></td>
+
+				</tr>
+			</tbody>
+		</table>
+
+		<hr>
+		<p style="color: rgb(6, 6, 124); font-size: 30px;">Cost summary</p>
+
+		<div class="row">
+			<div style="background-color: rgb(246, 246, 246)" class=" ml-4 col-3 mb-2">
+				<div class="row ml-4">
+					<span class="mt-4" style="font-size: 22px;">Your total</span>
+				</div>
+				<div class="row ml-4">
+					<span style="font-size: 55px; color: blue;">$</span><span style="font-size: 55px; color: blue;" th:text="${totalCost}"></span>
+					<p style="font-size: 12px;">Includes all taxes and
+						carrier-imposed fees</p>
+				</div>
+
+			</div>
+			<div class="col-8 ml-4">
+				<div class="row">
+					<div class="card card-body border-less">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>Passengers (<span th:text="${selectedNumPassengers}"></span>x)</td>
+									<td style="">$<span th:text="${subTotal}"></span> </td>
+
+								</tr>
+								<tr>
+									<td>Taxes</td>
+									<td style="">$<span th:text="${taxes}"></span> </td>
+
+								</tr>
+								<tr>
+									<td>Carrier-imposed fees</td>
+									<td>$0.00</td>
+								</tr>
+								<tr>
+									<td><span style="font-weight: bold;">Total</span> (all
+										passengers)</td>
+									<td style="font-weight: bold;">$<span th:text="${totalCost}"></span> </td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+
+		<div class="row">
+			<div class="col-sm-10">
+				<p style="color: rgb(6, 6, 124); font-size: 30px;">Billing
+					address</p>
+
+				<form class="needs-validation"
+					th:action="@{/search-flights/book-a-flight/order-details}"
+					method="post" id="placeOrder" novalidate>
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<label for="validationCustom01">First name</label> <input
+								type="text" class="form-control" placeholder="First name"
+								name="firstName" required>
+							<div class="valid-feedback">Looks good!</div>
+							<div class="invalid-feedback">Please provide a valid first
+								name.</div>
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="validationCustom02">Middle name</label> <input
+								type="text" class="form-control" id="validationCustom02"
+								placeholder="Middle name" name="middleName">
+
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="validationCustom02">Last name</label> <input
+								type="text" class="form-control" id="validationCustom02"
+								placeholder="Last name" name="lastName" required>
+							<div class="invalid-feedback">Please provide a valid last
+								name.</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-6 mb-3">
+							<label for="validationCustom03">Address 1</label> <input
+								type="text" class="form-control" id="validationCustom03"
+								placeholder="1234 Main St." name="address1" required>
+							<div class="invalid-feedback">Please provide a valid
+								address.</div>
+						</div>
+						<div class="col-md-6 mb-3">
+							<label for="validationCustom04">Address 2</label> <input
+								type="text" class="form-control" id="validationCustom04"
+								placeholder="Floor, Flat, Apt #" name="address2">
+							<!-- <div class="invalid-feedback">Please provide a valid state.</div> -->
+						</div>
+
+					</div>
+					<div class="form-row">
+						<div class="col-md-6 mb-3">
+							<label for="validationCustom03">City</label> <input type="text"
+								class="form-control" id="validationCustom03" placeholder="City"
+								name="city" required>
+							<div class="invalid-feedback">Please provide a valid city.</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationCustom04">State</label> <input type="text"
+								class="form-control" id="validationCustom04" placeholder="State"
+								name="state" required>
+							<div class="invalid-feedback">Please provide a valid state.</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationCustom05">Zip</label> <input type="text"
+								class="form-control" id="validationCustom05" placeholder="Zip"
+								name="zip" required>
+							<div class="invalid-feedback">Please provide a valid zip.</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-6 mb-3">
+							<label for="validationCustom03">Email</label> <input type="text"
+								class="form-control" id="validationCustom03" placeholder="email"
+								name="email" required>
+							<div class="invalid-feedback">Please provide a valid email.</div>
+						</div>
+
+					</div>
+					<hr>
+
+					<p style="color: rgb(6, 6, 124); font-size: 30px;">Payment
+						method</p>
+
+					<div class="form-row">
+						<div class="col-md-6 mb-3">
+							<div id="payment-form"></div>
+						</div>
+
+					</div>
+					<br>
+					<div class="form-group">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=""
+								id="invalidCheck" required> <label
+								class="form-check-label" for="invalidCheck"> Agree to
+								terms and conditions </label>
+							<div class="invalid-feedback">You must agree before
+								submitting.</div>
+						</div>
+					</div>
+
+
+				</form>
+
+				<script>
+					// Example starter JavaScript for disabling form submissions if there are invalid fields
+					(function() {
+						'use strict';
+						window
+								.addEventListener(
+										'load',
+										function() {
+											// Fetch all the forms we want to apply custom Bootstrap validation styles to
+											var forms = document
+													.getElementsByClassName('needs-validation');
+											// Loop over them and prevent submission
+											var validation = Array.prototype.filter
+													.call(
+															forms,
+															function(form) {
+																form
+																		.addEventListener(
+																				'submit',
+																				function(
+																						event) {
+																					if (form
+																							.checkValidity() === false) {
+																						event
+																								.preventDefault();
+																						event
+																								.stopPropagation();
+																					}
+																					form.classList
+																							.add('was-validated');
+																				},
+																				false);
+															});
+										}, false);
+					})();
+				</script>
+			</div>
+
+		</div>
+		<button form="placeOrder" class="btn btn-warning" type="submit">Make
+			payment</button>
+	</div>
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
+	<script
+		src="https://js.braintreegateway.com/js/braintree-2.32.1.min.js"></script>
+	<script>
+		$.ajax({
+			url : 'token',
+			type : 'post',
+			dataType : 'json',
+			success : function(data) {
+				braintree.setup(data.clientToken, "dropin", {
+					container : "payment-form"
+				});
+			},
+			error : function(error) {
+			}
+		})
+	</script>
+</body>
+</html>

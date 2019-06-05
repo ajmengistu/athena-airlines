@@ -1,12 +1,8 @@
 package com.airline.athena.service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,11 +50,23 @@ public class FlightSearchService {
 		modelMap.put("seatType", seatType.toString());
 		modelMap.put("selectedFlightId", chosenFlightId);
 
-		ScheduledFlight scheduledFlight = scheduledFlightRepository.getOne(chosenFlightId);
+		ScheduledFlight scheduledFlight = this.getScheduledFlight(chosenFlightId);
 		modelMap.put("selectedFlight", scheduledFlight);
 		modelMap.put("formatedDepartureDate", this.formatDepartureDate(scheduledFlight.getLocalDepartingDate()));
 		airportService.getDepartingCityAirportAndArrivalCityAirport(scheduledFlight.getSource(),
 				scheduledFlight.getDest(), modelMap);
+	}
 
+	public ScheduledFlight getScheduledFlight(String flightId) {
+		return scheduledFlightRepository.getOne(flightId);
+	}
+
+	public void submitPassengerForm(ModelMap modelMap, String seatType, String selectedFlightId) {
+		ScheduledFlight scheduledFlight = this.getScheduledFlight(selectedFlightId);
+		modelMap.put("selectedFlight", scheduledFlight);
+		modelMap.put("formatedDepartureDate", this.formatDepartureDate(scheduledFlight.getLocalDepartingDate()));
+		// returns departureCityAndArrivalCity in a ModelMap
+		airportService.getDepartingCityAirportAndArrivalCityAirport(scheduledFlight.getSource(),
+				scheduledFlight.getDest(), modelMap);
 	}
 }

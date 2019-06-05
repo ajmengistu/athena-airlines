@@ -1,6 +1,8 @@
 package com.airline.athena.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -11,6 +13,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -22,9 +26,12 @@ import com.airline.athena.service.AirportService;
 import com.airline.athena.service.FlightCostService;
 import com.airline.athena.service.FlightSearchService;
 import com.airline.athena.service.PassengerService;
+import com.braintreegateway.BraintreeGateway;
+import com.braintreegateway.ClientTokenRequest;
+import com.braintreegateway.Environment;
 
 @Controller
-@SessionAttributes({ "selectedNumPassengers", "selectedFlightId", "selectedFlightMethod" })
+@SessionAttributes({ "selectedNumPassengers", "selectedFlightId", "selectedFlightMethod", "seatType" })
 public class BookAFlightController {
 	@Autowired
 	private FlightSearchService flightSearchService;
@@ -35,10 +42,28 @@ public class BookAFlightController {
 	@Autowired
 	private PassengerService passengerService;
 
+	/* ********Payment Credentials ************ */
+	public String MERCHANT_ID = "64fmbfx4mt6pc69j";
+	public String PUBLIC_KEY = "cnt5rnqt5zxcmcbf";
+	public String PRIVATE_KEY = "e533d5e2074d2bdad3e78fb988e000f6";
+
+	/* ********Payment Credentials ************ */
+
 	// DO NOT REMOVE THIS: needed for front-end auto-complete jQuery request.
 	@GetMapping("/airports")
 	public @ResponseBody List<String> getAirports() {
 		return airportService.getAll();
+	}
+
+	@RequestMapping(value = "/search-flights/book-a-flight/token", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody Map<String, String> getClientToken() {
+		BraintreeGateway gateway = new BraintreeGateway(Environment.SANDBOX, MERCHANT_ID, PUBLIC_KEY, PRIVATE_KEY);
+		ClientTokenRequest clientTokenRequest = new ClientTokenRequest();
+		String clientToken = gateway.clientToken().generate(clientTokenRequest);
+		// System.out.println(clientToken);
+		HashMap<String, String> map = new HashMap<>();
+		map.put("clientToken", clientToken);
+		return map;
 	}
 
 	@GetMapping("/")
@@ -49,7 +74,6 @@ public class BookAFlightController {
 	@GetMapping("/search-flights/book-a-flight")
 	public String submitFlightForm(@Valid FlightSearchForm flightSearchForm, BindingResult bindingResult,
 			ModelMap modelMap, HttpServletRequest request) {
-
 		if (bindingResult.hasErrors()) {
 			System.out.println("--------------------------Error-----------------------------");
 			System.out.println(bindingResult.getFieldError());
@@ -81,6 +105,8 @@ public class BookAFlightController {
 	@PostMapping("/search-flights/book-a-flight/review-and-pay")
 	public String submitPassengerForm(ModelMap modelMap, HttpServletRequest request) {
 		passengerService.submitPassengerForm(modelMap, request);
+		flightSearchService.submitPassengerForm(modelMap, modelMap.get("seatType").toString(), modelMap.get("selectedFlightId").toString());
+		flightCostService.submitPassengerForm(modelMap);
 		return "review-and-pay";
 	}
 
