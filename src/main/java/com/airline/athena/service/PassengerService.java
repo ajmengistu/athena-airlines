@@ -15,7 +15,6 @@ import org.springframework.ui.ModelMap;
 
 import com.airline.athena.model.Passenger;
 import com.airline.athena.model.SeatNumber;
-import com.airline.athena.model.enums.SeatType;
 import com.airline.athena.repository.PassengerRepository;
 import com.airline.athena.repository.SeatNumberRepository;
 
@@ -43,7 +42,6 @@ public class PassengerService {
 		Integer numOfPass = Integer.valueOf((Integer) modelMap.get("selectedNumPassengers"));
 
 		List<Long> passengerIdsList = new ArrayList<Long>();
-
 		for (int i = 0; i < numOfPass; i++) {
 			Date date;
 			try {
@@ -71,15 +69,11 @@ public class PassengerService {
 			passenger.setPayed(true);
 			// Give each passenger a confirmation code
 			passenger.setConfirmationCode(UUID.randomUUID().toString().substring(0, 8));
-
 			// --------------Assign a Seat & Update -------------------
-
 			SeatNumber seatNumber = seatNumberRepository.findFirstByFlightIdAndSeatTypeAndSeatTakenOrderByIdAsc(
-					modelMap.get("selectedFlightId").toString(), ((SeatType) modelMap.get("seatType")).toString(),
-					false);
+					modelMap.get("selectedFlightId").toString(), modelMap.get("seatType").toString(), false);
 
 			passenger.setSeatNumber(seatNumber.getSeatNumber());
-
 			seatNumber.setSeatTaken(true);
 
 			seatNumberRepository.save(seatNumber);

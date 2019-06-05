@@ -63,8 +63,8 @@ public class FlightCostService {
 		return modelMap;
 	}
 
-	public void processPayment(ModelMap modelMap, String paymentMethodNonce) {
-		processPaymentService.processPayment(this.submitPassengerForm(modelMap), paymentMethodNonce);
+	public void getFlightCostInfo(ModelMap modelMap) {
+		this.submitPassengerForm(modelMap);
 	}
 
 }

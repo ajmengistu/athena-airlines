@@ -2,6 +2,7 @@ package com.airline.athena.service;
 
 import java.math.BigDecimal;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
@@ -20,12 +21,15 @@ public class ProcessPaymentService {
 	private static final String PRIVATE_KEY = "e533d5e2074d2bdad3e78fb988e000f6";
 
 	/* ********Payment Credentials ************ */
+	@Autowired
+	private FlightCostService flightcostService;
 
 	public BraintreeGateway getBrainTreeGateway() {
 		return new BraintreeGateway(Environment.SANDBOX, MERCHANT_ID, PUBLIC_KEY, PRIVATE_KEY);
 	}
 
 	public String processPayment(ModelMap modelMap, String paymentMethodNonce) {
+		flightcostService.getFlightCostInfo(modelMap);
 		Result<Transaction> result = this.processTransaction(modelMap, paymentMethodNonce);
 		if (result.isSuccess()) {
 			Transaction transaction = result.getTarget();

@@ -31,9 +31,9 @@ public class Order {
 	private Long addressId;
 
 	public Order() {
-		
+
 	}
-	
+
 	public Order(BigDecimal total, Date datetimeOrdered, Long addressId) {
 		this.hash = UUID.randomUUID().toString();
 		this.total = total;

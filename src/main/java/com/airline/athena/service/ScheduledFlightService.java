@@ -71,19 +71,19 @@ public class ScheduledFlightService {
 	}
 
 	public void updateFlightSeatCount(ModelMap modelMap) {
-		Integer numOfPassengers = (Integer) modelMap.get("selectedNumOfPassengers");
-		ScheduledFlight flightSchedule = scheduledFlightRepository
-				.findByFlightId(modelMap.get("selectedFlightId").toString());
+		Integer numOfPassengers = (Integer) modelMap.get("selectedNumPassengers");
 
-		if ((modelMap.get("selectedSeatType").toString().equals(SeatType.BUSINESS.toString()))) {
-			flightSchedule.setBusinessSeats(flightSchedule.getBusinessSeats() - numOfPassengers);
-		} else if ((modelMap.get("selectedSeatType").toString().equals(SeatType.FIRSTCLASS.toString()))) {
-			flightSchedule.setFirstClassSeats((flightSchedule.getFirstClassSeats() - numOfPassengers));
+		ScheduledFlight scheduledFlight = scheduledFlightRepository
+				.findByFlightId(modelMap.get("selectedFlightId").toString());
+		if ((modelMap.get("seatType").toString().equals(SeatType.BUSINESS.toString()))) {
+			scheduledFlight.setBusinessSeats(scheduledFlight.getBusinessSeats() - numOfPassengers);
+		} else if ((modelMap.get("seatType").toString().equals(SeatType.FIRSTCLASS.toString()))) {
+			scheduledFlight.setFirstClassSeats((scheduledFlight.getFirstClassSeats() - numOfPassengers));
 		} else {
-			flightSchedule.setEconomySeats((flightSchedule.getEconomySeats() - numOfPassengers));
+			scheduledFlight.setEconomySeats((scheduledFlight.getEconomySeats() - numOfPassengers));
 		}
 
-		scheduledFlightRepository.save(flightSchedule);
+		scheduledFlightRepository.save(scheduledFlight);
 
 	}
 }

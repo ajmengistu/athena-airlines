@@ -19,7 +19,8 @@ public class OrderService {
 	private AddressRepository addressRepository;
 
 	public void SaveNewOrder(ModelMap modelMap) {
-		Order order = new Order((BigDecimal) modelMap.get("totalFlightCost"), new Date(),
+
+		Order order = new Order((BigDecimal) modelMap.get("totalCost"), new Date(),
 				addressRepository.findTopByOrderByAddressIdDesc().getAddressId());
 		orderRepository.save(order);
 	}

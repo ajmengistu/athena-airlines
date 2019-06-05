@@ -128,7 +128,6 @@ public class BookAFlightController {
 			orderService.SaveNewOrder(modelMap);
 			paymentService.addNewPayment(modelMap, transactionId);
 		}
-
 		return "order-details";
 	}
 }
