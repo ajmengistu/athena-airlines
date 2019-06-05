@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "orders")
-public class Orders {
+public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +30,11 @@ public class Orders {
 	@Column(nullable = false)
 	private Long addressId;
 
-	public Orders() {
+	public Order() {
 		
 	}
 	
-	public Orders(BigDecimal total, Date datetimeOrdered, Long addressId) {
+	public Order(BigDecimal total, Date datetimeOrdered, Long addressId) {
 		this.hash = UUID.randomUUID().toString();
 		this.total = total;
 		this.datetimeOrdered = datetimeOrdered;
