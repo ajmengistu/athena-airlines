@@ -114,7 +114,9 @@ public class BookAFlightController {
 	public String processPayment(@RequestParam("payment_method_nonce") String paymentMethodNonce,
 			HttpServletRequest request, ModelMap modelMap) {
 		addressService.AddNewAddress(request);
-		if (processPaymentService.processPayment(modelMap, paymentMethodNonce)) {
+		String transactionId = processPaymentService.processPayment(modelMap, paymentMethodNonce);
+
+		if (transactionId != null) {
 			passengerService.assignEachPassengerASeat(modelMap);
 		}
 

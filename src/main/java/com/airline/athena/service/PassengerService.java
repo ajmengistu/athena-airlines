@@ -14,12 +14,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import com.airline.athena.model.Passenger;
+import com.airline.athena.model.SeatNumber;
+import com.airline.athena.model.enums.SeatType;
 import com.airline.athena.repository.PassengerRepository;
+import com.airline.athena.repository.SeatNumberRepository;
 
 @Service
 public class PassengerService {
 	@Autowired
 	private PassengerRepository passengerRepository;
+	@Autowired
+	public SeatNumberRepository seatNumberRepository;
 
 	public void submitPassengerForm(ModelMap modelMap, HttpServletRequest request) {
 		List<Long> passengerIdsList = this.addNewPassengers(modelMap, request);
@@ -59,27 +64,26 @@ public class PassengerService {
 	}
 
 	public void assignEachPassengerASeat(ModelMap modelMap) {
-
 		@SuppressWarnings("unchecked")
 		List<Long> ids = (List<Long>) modelMap.get("passengerIdsList");
 		for (Long id : ids) {
-			System.out.println("Id" + id);
 			Passenger passenger = passengerRepository.getOne(id);
 			passenger.setPayed(true);
 			// Give each passenger a confirmation code
 			passenger.setConfirmationCode(UUID.randomUUID().toString().substring(0, 8));
 
 			// --------------Assign a Seat & Update -------------------
-//			SeatNumber seatNumber = seatNumberRepository.findFirstByFlightIdAndSeatTypeAndSeatTakenOrderByIdAsc(
-//					modelMap.get("selectedFlightId").toString(),
-//					((SeatType) modelMap.get("selectedSeatType")).toString(), false);
-//
-//			passenger.setSeatNumber(seatNumber.getSeatNumber());
-//
-//			seatNumber.setSeatTaken(true);
-//
-//			seatNumberRepository.save(seatNumber);
-//			passengerRepository.save(passenger);
+			
+			SeatNumber seatNumber = seatNumberRepository.findFirstByFlightIdAndSeatTypeAndSeatTakenOrderByIdAsc(
+					modelMap.get("selectedFlightId").toString(),
+					((SeatType) modelMap.get("seatType")).toString(), false);
+
+			passenger.setSeatNumber(seatNumber.getSeatNumber());
+
+			seatNumber.setSeatTaken(true);
+
+			seatNumberRepository.save(seatNumber);
+			passengerRepository.save(passenger);
 		}
 	}
 }

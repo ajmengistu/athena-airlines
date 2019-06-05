@@ -25,7 +25,7 @@ public class ProcessPaymentService {
 		return new BraintreeGateway(Environment.SANDBOX, MERCHANT_ID, PUBLIC_KEY, PRIVATE_KEY);
 	}
 
-	public boolean processPayment(ModelMap modelMap, String paymentMethodNonce) {
+	public String processPayment(ModelMap modelMap, String paymentMethodNonce) {
 		Result<Transaction> result = this.processTransaction(modelMap, paymentMethodNonce);
 		if (result.isSuccess()) {
 			Transaction transaction = result.getTarget();
@@ -33,7 +33,7 @@ public class ProcessPaymentService {
 			String transactionId = transaction.getId();
 			System.out.println(transactionId);
 
-			return true;
+			return transactionId;
 
 		} else if (result.getTransaction() != null) {
 			Transaction transaction = result.getTransaction();
@@ -42,14 +42,14 @@ public class ProcessPaymentService {
 			System.out.println("  Status: " + transaction.getStatus());
 			System.out.println("  Code: " + transaction.getProcessorResponseCode());
 			System.out.println("  Text: " + transaction.getProcessorResponseText());
-			return false;
+			return null;
 		} else {
 			for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
 				System.out.println("Attribute: " + error.getAttribute());
 				System.out.println("  Code: " + error.getCode());
 				System.out.println("  Message: " + error.getMessage());
 			}
-			return false;
+			return null;
 		}
 	}
 
