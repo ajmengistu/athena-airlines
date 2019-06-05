@@ -17,7 +17,9 @@ import com.airline.athena.repository.FlightCostRepository;
 public class FlightCostService {
 	@Autowired
 	private FlightCostRepository flightCostRepository;
-	
+	@Autowired
+	private ProcessPaymentService processPaymentService;
+
 	public void getFlightCosts(ModelMap modelMap) {
 		modelMap.addAttribute("airfare", flightCostRepository.findAll());
 	}
@@ -44,8 +46,7 @@ public class FlightCostService {
 		return flightCostRepository.getOne(seatType.toString());
 	}
 
-	
-	public void submitPassengerForm(ModelMap modelMap) {
+	public ModelMap submitPassengerForm(ModelMap modelMap) {
 		// Tax 10 percent of purchase price
 		BigDecimal taxRate = new BigDecimal("0.09");
 
@@ -55,13 +56,15 @@ public class FlightCostService {
 		BigDecimal subTotal = flightCost.getFlatRate().multiply(new BigDecimal(Integer.toString(numOfPassengers)));
 		BigDecimal tax = subTotal.multiply(taxRate).setScale(2, RoundingMode.CEILING);
 		BigDecimal totalCost = subTotal.add(tax);
-		
+
 		modelMap.put("taxes", tax);
 		modelMap.put("subTotal", subTotal);
 		modelMap.put("totalCost", totalCost);
-		System.out.println(subTotal);
-		System.out.println(tax);
-		System.out.println(totalCost);
-		System.out.println(taxRate);
+		return modelMap;
 	}
+
+	public void processPayment(ModelMap modelMap, String paymentMethodNonce) {
+		processPaymentService.processPayment(this.submitPassengerForm(modelMap), paymentMethodNonce);
+	}
+
 }

@@ -9,7 +9,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,16 +22,18 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.airline.athena.model.enums.FlightMethod;
 import com.airline.athena.model.enums.SeatType;
 import com.airline.athena.model.forms.FlightSearchForm;
+import com.airline.athena.service.AddressService;
 import com.airline.athena.service.AirportService;
 import com.airline.athena.service.FlightCostService;
 import com.airline.athena.service.FlightSearchService;
 import com.airline.athena.service.PassengerService;
+import com.airline.athena.service.ProcessPaymentService;
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.ClientTokenRequest;
-import com.braintreegateway.Environment;
 
 @Controller
-@SessionAttributes({ "selectedNumPassengers", "selectedFlightId", "selectedFlightMethod", "seatType" })
+@SessionAttributes({ "selectedNumPassengers", "selectedFlightId", "selectedFlightMethod", "seatType",
+		"passengerIdsList" })
 public class BookAFlightController {
 	@Autowired
 	private FlightSearchService flightSearchService;
@@ -42,13 +43,10 @@ public class BookAFlightController {
 	private FlightCostService flightCostService;
 	@Autowired
 	private PassengerService passengerService;
-
-	/* ********Payment Credentials ************ */
-	private static final String MERCHANT_ID = "64fmbfx4mt6pc69j";
-	private static final String PUBLIC_KEY = "cnt5rnqt5zxcmcbf";
-	private static final String PRIVATE_KEY = "e533d5e2074d2bdad3e78fb988e000f6";
-
-	/* ********Payment Credentials ************ */
+	@Autowired
+	private AddressService addressService;
+	@Autowired
+	private ProcessPaymentService processPaymentService;
 
 	// DO NOT REMOVE THIS: needed for front-end auto-complete jQuery request.
 	@GetMapping("/airports")
@@ -59,10 +57,9 @@ public class BookAFlightController {
 	/* ******* Generate a BrainTreeGateway token for payment transaction ****** */
 	@RequestMapping(value = "/search-flights/book-a-flight/token", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody Map<String, String> getClientToken() {
-		BraintreeGateway gateway = new BraintreeGateway(Environment.SANDBOX, MERCHANT_ID, PUBLIC_KEY, PRIVATE_KEY);
+		BraintreeGateway gateway = processPaymentService.getBrainTreeGateway();
 		ClientTokenRequest clientTokenRequest = new ClientTokenRequest();
 		String clientToken = gateway.clientToken().generate(clientTokenRequest);
-		// System.out.println(clientToken);
 		HashMap<String, String> map = new HashMap<>();
 		map.put("clientToken", clientToken);
 		return map;
@@ -116,6 +113,10 @@ public class BookAFlightController {
 	@PostMapping("/search-flights/book-a-flight/order-details")
 	public String processPayment(@RequestParam("payment_method_nonce") String paymentMethodNonce,
 			HttpServletRequest request, ModelMap modelMap) {
+		addressService.AddNewAddress(request);
+		if (processPaymentService.processPayment(modelMap, paymentMethodNonce)) {
+//			passengerService
+		}
 
 		return "order-details";
 	}
