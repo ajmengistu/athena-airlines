@@ -14,7 +14,7 @@ import com.airline.athena.model.forms.FlightSearchForm;
 import com.airline.athena.repository.ScheduledFlightRepository;
 
 @Service
-public class FlightSearchService {
+public class ScheduledFlightService {
 
 	@Autowired
 	private ScheduledFlightRepository scheduledFlightRepository;
@@ -68,5 +68,22 @@ public class FlightSearchService {
 		// returns departureCityAndArrivalCity in a ModelMap
 		airportService.getDepartingCityAirportAndArrivalCityAirport(scheduledFlight.getSource(),
 				scheduledFlight.getDest(), modelMap);
+	}
+
+	public void updateFlightSeatCount(ModelMap modelMap) {
+		Integer numOfPassengers = (Integer) modelMap.get("selectedNumOfPassengers");
+		ScheduledFlight flightSchedule = scheduledFlightRepository
+				.findByFlightId(modelMap.get("selectedFlightId").toString());
+
+		if ((modelMap.get("selectedSeatType").toString().equals(SeatType.BUSINESS.toString()))) {
+			flightSchedule.setBusinessSeats(flightSchedule.getBusinessSeats() - numOfPassengers);
+		} else if ((modelMap.get("selectedSeatType").toString().equals(SeatType.FIRSTCLASS.toString()))) {
+			flightSchedule.setFirstClassSeats((flightSchedule.getFirstClassSeats() - numOfPassengers));
+		} else {
+			flightSchedule.setEconomySeats((flightSchedule.getEconomySeats() - numOfPassengers));
+		}
+
+		scheduledFlightRepository.save(flightSchedule);
+
 	}
 }

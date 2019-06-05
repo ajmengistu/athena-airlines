@@ -84,6 +84,6 @@ public class PassengerService {
 
 			seatNumberRepository.save(seatNumber);
 			passengerRepository.save(passenger);
-		}
+		}		
 	}
 }

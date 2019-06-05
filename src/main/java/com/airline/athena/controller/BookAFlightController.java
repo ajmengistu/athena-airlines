@@ -25,7 +25,7 @@ import com.airline.athena.model.forms.FlightSearchForm;
 import com.airline.athena.service.AddressService;
 import com.airline.athena.service.AirportService;
 import com.airline.athena.service.FlightCostService;
-import com.airline.athena.service.FlightSearchService;
+import com.airline.athena.service.ScheduledFlightService;
 import com.airline.athena.service.PassengerService;
 import com.airline.athena.service.ProcessPaymentService;
 import com.braintreegateway.BraintreeGateway;
@@ -36,7 +36,7 @@ import com.braintreegateway.ClientTokenRequest;
 		"passengerIdsList" })
 public class BookAFlightController {
 	@Autowired
-	private FlightSearchService flightSearchService;
+	private ScheduledFlightService scheduledFlightService;
 	@Autowired
 	private AirportService airportService;
 	@Autowired
@@ -82,7 +82,7 @@ public class BookAFlightController {
 		System.out.println("------------------------------Success---------------------------");
 
 		flightSearchForm.setFlightMethod((FlightMethod.valueOf(request.getParameter("flightMethod"))));
-		flightSearchService.getFlightSearchResults(modelMap, flightSearchForm);
+		scheduledFlightService.getFlightSearchResults(modelMap, flightSearchForm);
 		flightCostService.getFlightCosts(modelMap);
 		airportService.getDepartingCityAirportAndArrivalCityAirport(flightSearchForm, modelMap);
 
@@ -95,7 +95,7 @@ public class BookAFlightController {
 	public String showTripSummary(ModelMap modelMap, @RequestParam String chosenFlightId,
 			@RequestParam String seatType) {
 		SeatType seatType2 = SeatType.valueOf(seatType.toUpperCase());
-		flightSearchService.showTripSummary(modelMap, seatType2, chosenFlightId);
+		scheduledFlightService.showTripSummary(modelMap, seatType2, chosenFlightId);
 		flightCostService.showTripSummary(modelMap, seatType2);
 
 		return "your-trip-summary";
@@ -104,7 +104,7 @@ public class BookAFlightController {
 	@PostMapping("/search-flights/book-a-flight/review-and-pay")
 	public String submitPassengerForm(ModelMap modelMap, HttpServletRequest request) {
 		passengerService.submitPassengerForm(modelMap, request);
-		flightSearchService.submitPassengerForm(modelMap, modelMap.get("seatType").toString(),
+		scheduledFlightService.submitPassengerForm(modelMap, modelMap.get("seatType").toString(),
 				modelMap.get("selectedFlightId").toString());
 		flightCostService.submitPassengerForm(modelMap);
 		return "review-and-pay";
@@ -118,6 +118,8 @@ public class BookAFlightController {
 
 		if (transactionId != null) {
 			passengerService.assignEachPassengerASeat(modelMap);
+			scheduledFlightService.updateFlightSeatCount(modelMap);
+			
 		}
 
 		return "order-details";
