@@ -73,10 +73,10 @@ public class PassengerService {
 			passenger.setConfirmationCode(UUID.randomUUID().toString().substring(0, 8));
 
 			// --------------Assign a Seat & Update -------------------
-			
+
 			SeatNumber seatNumber = seatNumberRepository.findFirstByFlightIdAndSeatTypeAndSeatTakenOrderByIdAsc(
-					modelMap.get("selectedFlightId").toString(),
-					((SeatType) modelMap.get("seatType")).toString(), false);
+					modelMap.get("selectedFlightId").toString(), ((SeatType) modelMap.get("seatType")).toString(),
+					false);
 
 			passenger.setSeatNumber(seatNumber.getSeatNumber());
 
@@ -84,6 +84,6 @@ public class PassengerService {
 
 			seatNumberRepository.save(seatNumber);
 			passengerRepository.save(passenger);
-		}		
+		}
 	}
 }

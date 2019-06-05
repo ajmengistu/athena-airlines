@@ -27,6 +27,7 @@ import com.airline.athena.service.AirportService;
 import com.airline.athena.service.FlightCostService;
 import com.airline.athena.service.OrderService;
 import com.airline.athena.service.PassengerService;
+import com.airline.athena.service.PaymentService;
 import com.airline.athena.service.ProcessPaymentService;
 import com.airline.athena.service.ScheduledFlightService;
 import com.braintreegateway.BraintreeGateway;
@@ -50,6 +51,8 @@ public class BookAFlightController {
 	private ProcessPaymentService processPaymentService;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private PaymentService paymentService;
 
 	// DO NOT REMOVE THIS: needed for front-end auto-complete jQuery request.
 	@GetMapping("/airports")
@@ -123,6 +126,7 @@ public class BookAFlightController {
 			passengerService.assignEachPassengerASeat(modelMap);
 			scheduledFlightService.updateFlightSeatCount(modelMap);
 			orderService.SaveNewOrder(modelMap);
+			paymentService.addNewPayment(modelMap, transactionId);
 		}
 
 		return "order-details";
