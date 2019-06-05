@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,5 +56,30 @@ public class PassengerService {
 			}
 		}
 		return passengerIdsList;
+	}
+
+	public void assignEachPassengerASeat(ModelMap modelMap) {
+
+		@SuppressWarnings("unchecked")
+		List<Long> ids = (List<Long>) modelMap.get("passengerIdsList");
+		for (Long id : ids) {
+			System.out.println("Id" + id);
+			Passenger passenger = passengerRepository.getOne(id);
+			passenger.setPayed(true);
+			// Give each passenger a confirmation code
+			passenger.setConfirmationCode(UUID.randomUUID().toString().substring(0, 8));
+
+			// --------------Assign a Seat & Update -------------------
+//			SeatNumber seatNumber = seatNumberRepository.findFirstByFlightIdAndSeatTypeAndSeatTakenOrderByIdAsc(
+//					modelMap.get("selectedFlightId").toString(),
+//					((SeatType) modelMap.get("selectedSeatType")).toString(), false);
+//
+//			passenger.setSeatNumber(seatNumber.getSeatNumber());
+//
+//			seatNumber.setSeatTaken(true);
+//
+//			seatNumberRepository.save(seatNumber);
+//			passengerRepository.save(passenger);
+		}
 	}
 }

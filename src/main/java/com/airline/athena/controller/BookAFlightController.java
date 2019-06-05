@@ -115,7 +115,7 @@ public class BookAFlightController {
 			HttpServletRequest request, ModelMap modelMap) {
 		addressService.AddNewAddress(request);
 		if (processPaymentService.processPayment(modelMap, paymentMethodNonce)) {
-//			passengerService
+			passengerService.assignEachPassengerASeat(modelMap);
 		}
 
 		return "order-details";
