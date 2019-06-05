@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,9 +44,9 @@ public class BookAFlightController {
 	private PassengerService passengerService;
 
 	/* ********Payment Credentials ************ */
-	public String MERCHANT_ID = "64fmbfx4mt6pc69j";
-	public String PUBLIC_KEY = "cnt5rnqt5zxcmcbf";
-	public String PRIVATE_KEY = "e533d5e2074d2bdad3e78fb988e000f6";
+	private static final String MERCHANT_ID = "64fmbfx4mt6pc69j";
+	private static final String PUBLIC_KEY = "cnt5rnqt5zxcmcbf";
+	private static final String PRIVATE_KEY = "e533d5e2074d2bdad3e78fb988e000f6";
 
 	/* ********Payment Credentials ************ */
 
@@ -55,6 +56,7 @@ public class BookAFlightController {
 		return airportService.getAll();
 	}
 
+	/* ******* Generate a BrainTreeGateway token for payment transaction ****** */
 	@RequestMapping(value = "/search-flights/book-a-flight/token", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody Map<String, String> getClientToken() {
 		BraintreeGateway gateway = new BraintreeGateway(Environment.SANDBOX, MERCHANT_ID, PUBLIC_KEY, PRIVATE_KEY);
@@ -105,9 +107,16 @@ public class BookAFlightController {
 	@PostMapping("/search-flights/book-a-flight/review-and-pay")
 	public String submitPassengerForm(ModelMap modelMap, HttpServletRequest request) {
 		passengerService.submitPassengerForm(modelMap, request);
-		flightSearchService.submitPassengerForm(modelMap, modelMap.get("seatType").toString(), modelMap.get("selectedFlightId").toString());
+		flightSearchService.submitPassengerForm(modelMap, modelMap.get("seatType").toString(),
+				modelMap.get("selectedFlightId").toString());
 		flightCostService.submitPassengerForm(modelMap);
 		return "review-and-pay";
 	}
 
+	@PostMapping("/search-flights/book-a-flight/order-details")
+	public String processPayment(@RequestParam("payment_method_nonce") String paymentMethodNonce,
+			HttpServletRequest request, ModelMap modelMap) {
+
+		return "order-details";
+	}
 }
