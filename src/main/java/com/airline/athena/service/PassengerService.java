@@ -80,4 +80,14 @@ public class PassengerService {
 			passengerRepository.save(passenger);
 		}
 	}
+
+	public void getCurrentBookingPassengers(ModelMap modelMap) {
+		List<Passenger> passengerAddedList = new ArrayList<>();
+		@SuppressWarnings("unchecked")
+		List<Long> ids = (List<Long>) modelMap.get("passengerIdsList");
+		for (Long id : ids) {
+			passengerAddedList.add(passengerRepository.getOne(id));
+		}
+		modelMap.put("passengerAddedList", passengerAddedList);
+	}
 }

@@ -60,6 +60,11 @@ public class BookAFlightController {
 		return airportService.getAll();
 	}
 
+	@GetMapping("/orders")
+	public String getTest() {
+		return "orders";
+	}
+
 	/* ******* Generate a BrainTreeGateway token for payment transaction ****** */
 	@RequestMapping(value = "/search-flights/book-a-flight/token", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody Map<String, String> getClientToken() {
@@ -128,6 +133,11 @@ public class BookAFlightController {
 			orderService.SaveNewOrder(modelMap);
 			paymentService.addNewPayment(modelMap, transactionId);
 		}
+		scheduledFlightService.submitPassengerForm(modelMap, modelMap.get("seatType").toString(),
+				modelMap.get("selectedFlightId").toString());
+		passengerService.getCurrentBookingPassengers(modelMap);
+		orderService.getCurrentOrderNumber(modelMap);
+		
 		return "order-details";
 	}
 }

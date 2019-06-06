@@ -88,12 +88,14 @@
 		<p style="color: rgb(6, 6, 124); font-size: 30px;">Cost summary</p>
 
 		<div class="row">
-			<div style="background-color: rgb(246, 246, 246)" class=" ml-4 col-3 mb-2">
+			<div style="background-color: rgb(246, 246, 246)"
+				class=" ml-4 col-3 mb-2">
 				<div class="row ml-4">
 					<span class="mt-4" style="font-size: 22px;">Your total</span>
 				</div>
 				<div class="row ml-4">
-					<span style="font-size: 55px; color: blue;">$</span><span style="font-size: 55px; color: blue;" th:text="${totalCost}"></span>
+					<span style="font-size: 55px; color: blue;">$</span><span
+						style="font-size: 55px; color: blue;" th:text="${totalCost}"></span>
 					<p style="font-size: 12px;">Includes all taxes and
 						carrier-imposed fees</p>
 				</div>
@@ -105,13 +107,16 @@
 						<table class="table">
 							<tbody>
 								<tr>
-									<td>Passengers (<span th:text="${selectedNumPassengers}"></span>x)</td>
-									<td style="">$<span th:text="${subTotal}"></span> </td>
+									<td>Passengers (<span th:text="${selectedNumPassengers}"></span>x)
+									</td>
+									<td style="">$<span th:text="${subTotal}"></span>
+									</td>
 
 								</tr>
 								<tr>
 									<td>Taxes</td>
-									<td style="">$<span th:text="${taxes}"></span> </td>
+									<td style="">$<span th:text="${taxes}"></span>
+									</td>
 
 								</tr>
 								<tr>
@@ -121,7 +126,9 @@
 								<tr>
 									<td><span style="font-weight: bold;">Total</span> (all
 										passengers)</td>
-									<td style="font-weight: bold;">$<span th:text="${totalCost}"></span> </td>
+									<td style="font-weight: bold;">$<span
+										th:text="${totalCost}"></span>
+									</td>
 								</tr>
 							</tbody>
 						</table>

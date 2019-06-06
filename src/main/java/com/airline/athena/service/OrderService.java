@@ -24,4 +24,9 @@ public class OrderService {
 				addressRepository.findTopByOrderByAddressIdDesc().getAddressId());
 		orderRepository.save(order);
 	}
+	
+	public void getCurrentOrderNumber(ModelMap modelMap) {
+		Order order = orderRepository.findTopByOrderByOrderIdDesc();
+		modelMap.put("confirmationNumber", order.getHash());
+	}
 }
