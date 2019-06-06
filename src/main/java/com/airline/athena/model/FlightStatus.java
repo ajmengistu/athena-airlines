@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity
+@Entity(name="flight_status")
 public class FlightStatus {
 	@Id
 	@Column(length = 6, nullable = false, unique = true, updatable = true)
