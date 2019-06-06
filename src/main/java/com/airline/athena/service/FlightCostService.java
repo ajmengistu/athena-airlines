@@ -17,8 +17,8 @@ import com.airline.athena.repository.FlightCostRepository;
 public class FlightCostService {
 	@Autowired
 	private FlightCostRepository flightCostRepository;
-	@Autowired
-	private ProcessPaymentService processPaymentService;
+//	@Autowired
+//	private ProcessPaymentService processPaymentService;
 
 	public void getFlightCosts(ModelMap modelMap) {
 		modelMap.addAttribute("airfare", flightCostRepository.findAll());

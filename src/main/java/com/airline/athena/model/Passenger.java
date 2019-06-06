@@ -42,8 +42,13 @@ public class Passenger {
 	@Column(length = 8, nullable = true)
 	private String seatNumber;
 
-	public Passenger() {
+	@Column(nullable = false)
+	private Boolean checkedIn;
 
+	@Column(nullable = false)
+	private Date checkedInDatetime;
+
+	public Passenger() {
 	}
 
 	public Passenger(String firstName, String middleName, String lastName, Date birthday, String gender) {
@@ -54,6 +59,7 @@ public class Passenger {
 		this.birthday = birthday;
 		this.gender = gender;
 		this.seatNumber = null;
+		this.checkedIn = false;
 	}
 
 	public Long getId() {
@@ -126,5 +132,21 @@ public class Passenger {
 
 	public void setSeatNumber(String seatNumber) {
 		this.seatNumber = seatNumber;
+	}
+
+	public Boolean getCheckedIn() {
+		return checkedIn;
+	}
+
+	public void setCheckedIn(Boolean checkedIn) {
+		this.checkedIn = checkedIn;
+	}
+
+	public Date getCheckedInDatetime() {
+		return checkedInDatetime;
+	}
+
+	public void setCheckedInDatetime(Date datetime) {
+		this.checkedInDatetime = datetime;
 	}
 }
