@@ -20,4 +20,36 @@ public class FlightStatus {
 
 	@Column(nullable = false)
 	private FlightStatus status;
+
+	public String getFlightId() {
+		return flightId;
+	}
+
+	public void setFlightId(String flightId) {
+		this.flightId = flightId;
+	}
+
+	public Date getScheduled() {
+		return scheduled;
+	}
+
+	public void setScheduled(Date scheduled) {
+		this.scheduled = scheduled;
+	}
+
+	public Date getActual() {
+		return actual;
+	}
+
+	public void setActual(Date actual) {
+		this.actual = actual;
+	}
+
+	public FlightStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(FlightStatus status) {
+		this.status = status;
+	}
 }
