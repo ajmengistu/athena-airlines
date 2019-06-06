@@ -38,7 +38,6 @@ public class ProcessPaymentService {
 			System.out.println(transactionId);
 
 			return transactionId;
-
 		} else if (result.getTransaction() != null) {
 			Transaction transaction = result.getTransaction();
 			System.out.println("Failed!: " + transaction.getId());

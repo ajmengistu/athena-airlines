@@ -8,7 +8,5 @@ import com.airline.athena.repository.SeatNumberRepository;
 @Service
 public class SeatNumberService {
 	@Autowired
-	public SeatNumberRepository seatNumberRepository;
-	
-	
+	public SeatNumberRepository seatNumberRepository;	
 }

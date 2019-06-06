@@ -95,9 +95,22 @@ public class PassengerService {
 	public void checkInPassenger(CheckInForm checkInForm, ModelMap modelMap) {
 		Passenger passenger = passengerRepository.findByFirstNameAndLastNameAndConfirmationCode(
 				checkInForm.getFirstName(), checkInForm.getLastName(), checkInForm.getConfirmationCode());
-		System.out.println(passenger.getFirstName());
-		passenger.setCheckedIn(true);
-		passenger.setCheckedInDatetime(new Date());
-		passengerRepository.save(passenger);
+		if (passenger != null) {
+			if (passenger.getCheckedin()) {
+				modelMap.put("warning", "block"); // Passenger has already checked in.
+			} else {
+				passenger.setCheckedin(true);// Check-in the passenger
+				passenger.setCheckedinDatetime(new Date());
+				passengerRepository.save(passenger);
+				modelMap.put("passenger", passenger);
+				modelMap.put("success", "block");
+			}
+		} else { // Invalid information entered
+			modelMap.put("danger", "block");
+		}
+	}
+
+	public void sendEmailWithTicketToPassenger(ModelMap modelMap) {
+
 	}
 }

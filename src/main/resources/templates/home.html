@@ -38,7 +38,7 @@
 	<!-- Navigation bar START-->
 	<div th:replace="fragments/navbar.html :: navbar"></div>
 	<!-- Navigation bar END-->
-	
+
 	<!-- Image Carousel START-->
 	<!-- Image Carousel END-->
 	<!-- Form: Book a Flight, Check-in, Flight status START-->
@@ -135,7 +135,8 @@
 			<div class="tab-pane fade" id="profile" role="tabpanel"
 				aria-labelledby="profile-tab">
 				<!-- ----------Form: Check-in---------------- START-->
-				<form class="needs-validation" novalidate>
+				<form class="needs-validation"
+					th:action="@{/search-flights/checkin}" method="post" th:object="${checkInForm}" novalidate>
 					<div class="form-row mt-4">
 						<p class="ml-2">
 							Check-in is available starting 24 hours before your scheduled
@@ -143,19 +144,20 @@
 								Processing Times </a> page for details.
 						</p>
 						<div class="col-md-3 mb-3">
-							<input type="text" class="form-control" id="validationServer01"
+							<input type="text"  class="form-control" id="validationServer01" th:field="*{firstName}"
 								placeholder="Passenger first name*" required>
 							<div class="invalid-tooltip">Please provide a valid first
 								name!</div>
 						</div>
 						<div class="col-md-3 mb-3">
-							<input type="text" class="form-control" id="validationServer02"
+							<input type="text" class="form-control" id="validationServer02" th:field="*{lastName}"
 								placeholder="Passenger last name*" required>
 							<div class="invalid-tooltip">Please provide a valid last
 								name!</div>
 						</div>
 						<div class="col-md-3 mb-3">
-							<input type="text" class="form-control" id="validationServer02"
+							<input type="text" class="form-control" id="validationServer02" th:field="*{confirmationCode}"
+							
 								placeholder="Confirmation number*" required>
 							<div class="invalid-tooltip">Please provide a valid
 								confirmation number!</div>

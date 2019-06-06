@@ -1,0 +1,72 @@
+<!doctype html>
+<html ang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1,
+         shrink-to-fit=no">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript"
+	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="icon" th:href="@{/images/logo.jpg}">
+<title>Home | Athena Airlines</title>
+</head>
+<body>
+	<!-- Navigation bar START-->
+	<div th:replace="fragments/navbar.html :: navbar"></div>
+	<!-- Navigation bar END-->
+	<div class="container">
+		<hr>
+		<p style="font-size: 30px; color: rgb(16, 130, 236)">Flight
+			check-in</p>
+		<div th:if="${success} != null">
+			<div style="display: ${success" class="alert alert-success">
+				Success! You have successfully checked in for your flight! <br>
+				Thank you, Aderajew. Have a safe flight!
+			</div>
+		</div>
+		<div th:if="${warning} != null">
+			<div style="display: ${warning" class="alert alert-warning">
+				You have already successfully checked in! <br> Thank you for
+				flying with Athena Airlines! Have a safe trip!
+			</div>
+		</div>
+		<div th:if="${danger} != null">
+			<div style="display: ${danger" class="alert alert-danger">Error!
+				The information you have entered is not valid! Please try again.</div>
+		</div>
+		<div class="mb-2" style="font-size: 22px;">
+			<span><a href="/">Back to Home</a>&nbsp;|&nbsp;</span><span><a
+				href="/">Book a flight</a>&nbsp;|&nbsp;</span> <span><a href="/">Flight
+					status</a></span>
+
+			<div class="mt-4">
+				<img src="/images/airplane-architecture-buildings.jpg" width="40%">
+			</div>
+		</div>
+	</div>
+</body>
+</html>
