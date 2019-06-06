@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.airline.athena.model.enums.FlightMethod;
 import com.airline.athena.model.enums.SeatType;
+import com.airline.athena.model.forms.CheckInForm;
 import com.airline.athena.model.forms.FlightSearchForm;
 import com.airline.athena.service.AddressService;
 import com.airline.athena.service.AirportService;
@@ -137,7 +138,12 @@ public class BookAFlightController {
 				modelMap.get("selectedFlightId").toString());
 		passengerService.getCurrentBookingPassengers(modelMap);
 		orderService.getCurrentOrderNumber(modelMap);
-		
+
 		return "order-details";
+	}
+
+	@PostMapping("/search-flights/checkin")
+	public String checkIn(CheckInForm checkInForm, ModelMap modelMap) {
+		return "flight-checkin";
 	}
 }
