@@ -15,6 +15,7 @@ import org.springframework.ui.ModelMap;
 
 import com.airline.athena.model.Passenger;
 import com.airline.athena.model.SeatNumber;
+import com.airline.athena.model.forms.CheckInForm;
 import com.airline.athena.repository.PassengerRepository;
 import com.airline.athena.repository.SeatNumberRepository;
 
@@ -89,5 +90,14 @@ public class PassengerService {
 			passengerAddedList.add(passengerRepository.getOne(id));
 		}
 		modelMap.put("passengerAddedList", passengerAddedList);
+	}
+
+	public void checkInPassenger(CheckInForm checkInForm, ModelMap modelMap) {
+		Passenger passenger = passengerRepository.findByFirstNameAndLastNameAndConfirmationCode(
+				checkInForm.getFirstName(), checkInForm.getLastName(), checkInForm.getConfirmationCode());
+		System.out.println(passenger.getFirstName());
+		passenger.setCheckedIn(true);
+		passenger.setCheckedInDatetime(new Date());
+		passengerRepository.save(passenger);
 	}
 }

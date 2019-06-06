@@ -144,6 +144,7 @@ public class BookAFlightController {
 
 	@PostMapping("/search-flights/checkin")
 	public String checkIn(CheckInForm checkInForm, ModelMap modelMap) {
+		passengerService.checkInPassenger(checkInForm, modelMap);
 		return "flight-checkin";
 	}
 }

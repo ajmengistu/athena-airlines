@@ -8,4 +8,5 @@ import com.airline.athena.model.Passenger;
 @Repository
 public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 	public Passenger findTopByOrderByIdDesc();
+	public Passenger findByFirstNameAndLastNameAndConfirmationCode(String firstName, String lastName, String confirmationCode);
 }
