@@ -27,6 +27,7 @@ import com.airline.athena.model.forms.FlightStatusForm;
 import com.airline.athena.service.AddressService;
 import com.airline.athena.service.AirportService;
 import com.airline.athena.service.FlightCostService;
+import com.airline.athena.service.FlightStatusService;
 import com.airline.athena.service.OrderService;
 import com.airline.athena.service.PassengerService;
 import com.airline.athena.service.PaymentService;
@@ -55,6 +56,8 @@ public class BookAFlightController {
 	private OrderService orderService;
 	@Autowired
 	private PaymentService paymentService;
+	@Autowired
+	private FlightStatusService flightStatusService;
 
 	// DO NOT REMOVE THIS: needed for front-end auto-complete jQuery request.
 	@GetMapping("/airports")
@@ -148,7 +151,7 @@ public class BookAFlightController {
 
 	@GetMapping("/search-flights/flight-status")
 	public String flightStatus(FlightStatusForm flightStatusForm, ModelMap modelMap) {
-		System.out.println(flightStatusForm.getFrom());
+		flightStatusService.getFlightStatus(flightStatusForm, modelMap);
 		return "flight-status";
 	}
 }

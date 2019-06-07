@@ -41,6 +41,22 @@
 	<div class="container">
 		<hr>
 		<p style="font-size: 30px; color: rgb(16, 130, 236)">Flight status</p>
+		<div style="color: rgb(6, 6, 124); font-size: 30px;">
+			Flight number:&nbsp;<span th:text="${flight.getFlightId()}"> </span><br>
+			Flight status: <span style="color: green; font-size: 30px;"
+				th:text="${flight.getStatus()}"></span>
+		</div>
+		<div class="mt-4" style="font-size: 22px;">
+			<span><a href="/">Back to Home</a>&nbsp;|&nbsp;</span><span><a
+				href="/">Book a flight</a>&nbsp;|&nbsp;</span> <span><a href="/">Flight
+					status</a></span>
+
+			<div class="mt-4">
+				<img src="/images/aircraft-aircraft-wing-airplane.jpg" width="40%">
+			</div>
+		</div>
+
+
 	</div>
 </body>
 </html>
