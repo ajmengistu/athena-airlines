@@ -5,8 +5,10 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name="flight_status")
+@Entity()
+@Table(name="flight_status")
 public class FlightStatus {
 	@Id
 	@Column(length = 6, nullable = false, unique = true, updatable = true)
@@ -19,7 +21,7 @@ public class FlightStatus {
 	private Date actual;
 
 	@Column(nullable = false)
-	private FlightStatus status;
+	private String status;
 
 	public String getFlightId() {
 		return flightId;
@@ -45,11 +47,11 @@ public class FlightStatus {
 		this.actual = actual;
 	}
 
-	public FlightStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(FlightStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 }

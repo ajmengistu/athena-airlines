@@ -23,6 +23,7 @@ import com.airline.athena.model.enums.FlightMethod;
 import com.airline.athena.model.enums.SeatType;
 import com.airline.athena.model.forms.CheckInForm;
 import com.airline.athena.model.forms.FlightSearchForm;
+import com.airline.athena.model.forms.FlightStatusForm;
 import com.airline.athena.service.AddressService;
 import com.airline.athena.service.AirportService;
 import com.airline.athena.service.FlightCostService;
@@ -73,7 +74,8 @@ public class BookAFlightController {
 	}
 
 	@GetMapping("/")
-	public String getHomeAndSearchForFlights(FlightSearchForm flightSearchForm, CheckInForm checkInForm) {
+	public String getHomeAndSearchForFlights(FlightSearchForm flightSearchForm, CheckInForm checkInForm,
+			FlightStatusForm flightStatusForm) {
 		return "home";
 	}
 
@@ -140,8 +142,13 @@ public class BookAFlightController {
 
 	@PostMapping("/search-flights/checkin")
 	public String checkIn(CheckInForm checkInForm, ModelMap modelMap) {
-		System.out.println(checkInForm.getFirstName());
 		passengerService.checkInPassenger(checkInForm, modelMap);
 		return "flight-checkin";
+	}
+
+	@GetMapping("/search-flights/flight-status")
+	public String flightStatus(FlightStatusForm flightStatusForm, ModelMap modelMap) {
+		System.out.println(flightStatusForm.getFrom());
+		return "flight-status";
 	}
 }

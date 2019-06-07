@@ -170,11 +170,13 @@
 			<div class="tab-pane fade" id="contact" role="tabpanel"
 				aria-labelledby="contact-tab">
 				<!-- ----------Form: Flight status------------------ START-->
-				<form class="needs-validation" novalidate>
+				<form class="needs-validation" method="get" th:object="${flightStatusForm}" 
+				th:action="@{/search-flights/flight-status}"
+				novalidate>
 					<div class="form-row mt-4">
 						<div class="col-md-3 mb-3">
 							<label for="validationServer01">From*</label> <input type="text"
-								class="form-control" id="validationServer01"
+								class="form-control" th:field="*{from}" id="fromStatusAirports"
 								placeholder="City or airport*" required>
 							<div class="valid-feedback">Looks good!</div>
 							<div class="invalid-tooltip">Please provide a valid
@@ -182,9 +184,8 @@
 						</div>
 						<div class="col-md-3 mb-3">
 							<label for="validationServer02">To*</label> <input type="text"
-								class="form-control " id="validationServer02"
-								placeholder="City or
-                           airport*"
+								class="form-control " id="toStatusAirports" th:field="*{to}" 
+								placeholder="City or airport*"
 								required>
 							<div class="valid-feedback">Looks good!</div>
 							<div class="invalid-tooltip">Please provide a valid arrival
@@ -194,7 +195,7 @@
 					<div class="form-row mt-3">
 						<div class="col-md-3 mb-3">
 							<label for="validationServer02">Date*</label> <input type="text"
-								class="form-control" placeholder="" id="todaysDate"
+								class="form-control" placeholder="" id="statusDate" th:field="*{date}"
 								name="flightStatuseDate" value="05/25/2019" required>
 							<div class="valid-feedback">
 								<!-- Looks good! -->
@@ -203,8 +204,8 @@
 						</div>
 						<div class="col-md-3 mb-3">
 							<label for="validationServer02">Flight number*</label> <input
-								type="text" class="form-control" id="validationServer02"
-								placeholder="" required>
+								type="text" class="form-control" id="validationServer02" th:field="*{flightNumber}"
+								placeholder="" required> 
 							<div class="valid-feedback">Looks good!</div>
 							<div class="invalid-tooltip">Please provide a valid flight
 								number!</div>
@@ -281,6 +282,7 @@
 		//alert(futureDate());
 		document.getElementById("todaysDate").value = todaysDate();
 		document.getElementById('futureReturnDate').value = futureDate();
+		document.getElementById('statusDate').value = todaysDate();
 
 		// Render the datepicker 
 		$(function() {
@@ -310,6 +312,12 @@
 						source : data,
 					});
 					$("#toAirports").autocomplete({
+						source : data,
+					});
+					$("#fromStatusAirports").autocomplete({
+						source : data,
+					});
+					$("#toStatusAirports").autocomplete({
 						source : data,
 					});
 				});
