@@ -32,6 +32,7 @@
 <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="icon" th:href="@{/images/logo.jpg}">
+<link rel="stylesheet" type="text/css" href="/css/home.css">
 <title>Home | Athena Airlines</title>
 </head>
 <body>
@@ -40,6 +41,8 @@
 	<!-- Navigation bar END-->
 
 	<!-- Image Carousel START-->
+	<div
+		th:replace="fragments/home-page-carousel.html :: home-page-carousel"></div>
 	<!-- Image Carousel END-->
 	<!-- Form: Book a Flight, Check-in, Flight status START-->
 	<div class="container">
@@ -136,7 +139,8 @@
 				aria-labelledby="profile-tab">
 				<!-- ----------Form: Check-in---------------- START-->
 				<form class="needs-validation"
-					th:action="@{/search-flights/checkin}" method="post" th:object="${checkInForm}" novalidate>
+					th:action="@{/search-flights/checkin}" method="post"
+					th:object="${checkInForm}" novalidate>
 					<div class="form-row mt-4">
 						<p class="ml-2">
 							Check-in is available starting 24 hours before your scheduled
@@ -144,20 +148,22 @@
 								Processing Times </a> page for details.
 						</p>
 						<div class="col-md-3 mb-3">
-							<input type="text"  class="form-control" id="validationServer01" th:field="*{firstName}"
-								placeholder="Passenger first name*" required>
+							<input type="text" class="form-control" id="validationServer01"
+								th:field="*{firstName}" placeholder="Passenger first name*"
+								required>
 							<div class="invalid-tooltip">Please provide a valid first
 								name!</div>
 						</div>
 						<div class="col-md-3 mb-3">
-							<input type="text" class="form-control" id="validationServer02" th:field="*{lastName}"
-								placeholder="Passenger last name*" required>
+							<input type="text" class="form-control" id="validationServer02"
+								th:field="*{lastName}" placeholder="Passenger last name*"
+								required>
 							<div class="invalid-tooltip">Please provide a valid last
 								name!</div>
 						</div>
 						<div class="col-md-3 mb-3">
-							<input type="text" class="form-control" id="validationServer02" th:field="*{confirmationCode}"
-							
+							<input type="text" class="form-control" id="validationServer02"
+								th:field="*{confirmationCode}"
 								placeholder="Confirmation number*" required>
 							<div class="invalid-tooltip">Please provide a valid
 								confirmation number!</div>
@@ -170,9 +176,9 @@
 			<div class="tab-pane fade" id="contact" role="tabpanel"
 				aria-labelledby="contact-tab">
 				<!-- ----------Form: Flight status------------------ START-->
-				<form class="needs-validation" method="get" th:object="${flightStatusForm}" 
-				th:action="@{/search-flights/flight-status}"
-				novalidate>
+				<form class="needs-validation" method="get"
+					th:object="${flightStatusForm}"
+					th:action="@{/search-flights/flight-status}" novalidate>
 					<div class="form-row mt-4">
 						<div class="col-md-3 mb-3">
 							<label for="validationServer01">From*</label> <input type="text"
@@ -184,9 +190,8 @@
 						</div>
 						<div class="col-md-3 mb-3">
 							<label for="validationServer02">To*</label> <input type="text"
-								class="form-control " id="toStatusAirports" th:field="*{to}" 
-								placeholder="City or airport*"
-								required>
+								class="form-control " id="toStatusAirports" th:field="*{to}"
+								placeholder="City or airport*" required>
 							<div class="valid-feedback">Looks good!</div>
 							<div class="invalid-tooltip">Please provide a valid arrival
 								airport or city!</div>
@@ -195,8 +200,9 @@
 					<div class="form-row mt-3">
 						<div class="col-md-3 mb-3">
 							<label for="validationServer02">Date*</label> <input type="text"
-								class="form-control" placeholder="" id="statusDate" th:field="*{date}"
-								name="flightStatuseDate" value="05/25/2019" required>
+								class="form-control" placeholder="" id="statusDate"
+								th:field="*{date}" name="flightStatuseDate" value="05/25/2019"
+								required>
 							<div class="valid-feedback">
 								<!-- Looks good! -->
 							</div>
@@ -204,8 +210,8 @@
 						</div>
 						<div class="col-md-3 mb-3">
 							<label for="validationServer02">Flight number*</label> <input
-								type="text" class="form-control" id="validationServer02" th:field="*{flightNumber}"
-								placeholder="" required> 
+								type="text" class="form-control" id="validationServer02"
+								th:field="*{flightNumber}" placeholder="" required>
 							<div class="valid-feedback">Looks good!</div>
 							<div class="invalid-tooltip">Please provide a valid flight
 								number!</div>
@@ -216,7 +222,9 @@
 				<!-- ----------Form: Flight status------------------ END-->
 			</div>
 		</div>
+		<hr>
 	</div>
+	<div th:replace="fragments/footer.html :: footer"></div>
 	<!-- -----------Form: Book Flights Script--------------- START-->
 	<script>
 		// Show Round trip box to select return date
