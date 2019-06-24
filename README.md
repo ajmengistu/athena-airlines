@@ -33,6 +33,7 @@ psql
 =# \c [database_name]
 =# \l
 =# \dt
+=# \i athena_airlines.sql
 ```
 Remote connection
 ```
