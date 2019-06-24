@@ -27,6 +27,13 @@ Open PostgreSQL command line
 ```
 sudo su postgres
 ```
+Connect to local database using psql
+```
+psql
+=# \c [database_name]
+=# \l
+=# \dt
+```
 Remote connection
 ```
 psql -h aws-endpoint -p 5432 -U root dbname
